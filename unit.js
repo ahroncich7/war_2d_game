@@ -67,7 +67,7 @@ class Unit {
 
     }
 
-
+    //calcula los costes de moverse del nodo inicial hasta cualquier nodo de una lista de nodos
     calculateCosts(startNode, grid) {
 
         let openList = [startNode]; //crea lista de los nodos pendientes de evaluar. Son todos los que estan a su alcance

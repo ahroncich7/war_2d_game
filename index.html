@@ -4,7 +4,8 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>ww2-canvas</title>
+    <link rel="shortcut icon" href="/war_2d_game/tank.ico" type="image/x-icon">
+    <title>war_2d_game</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='styles.css'>
 </head>
@@ -15,6 +16,11 @@
 
 
         <div id="uiArea" class="uiArea">
+            <div class="uiArea_buttons">
+                <label for="movement">Movement</label>
+                <input id="movement" type="number">
+                <button id="movement_btn" onclick="changeMovement()">change</button>
+            </div>
 
         </div>
 

@@ -11,12 +11,16 @@ let matrix = //
     ]
 
 
+function changeMovement() {
+    unit.reach = document.querySelector("#movement").value
+}
 
 function update() {
     gridMap = new GridSystem(matrix, document.querySelector(".gameArea"))
     unit = new Unit("water")
     gridMap.getCell(0, 0).isReachable = true
     unit.moveTo(gridMap.getCell(0, 0))
+
 };
 
 
