@@ -1,0 +1,46 @@
+body {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+}
+
+.isTransparent {
+    background-color: transparent;
+}
+
+.mainArea {
+    background-color: orange;
+    width: 640px;
+    height: 480px;
+    position: relative;
+    display: flex;
+    flex-flow: column;
+}
+
+.uiArea {
+    background-color: gray;
+    width: auto;
+    flex-grow: 2;
+    border: 5px solid white;
+}
+
+.gameArea {
+    background-color: lightblue;
+    width: 320px;
+    flex-grow: 6;
+    margin: 20px;
+    align-self: center;
+    position: relative;
+}
+
+.cellElement {
+    border: 1px solid white;
+    justify-content: center;
+    display: flex;
+}
+
+.cellElement>* {
+    margin: auto;
+    max-height: 80%;
+    max-width: 80%;
+}

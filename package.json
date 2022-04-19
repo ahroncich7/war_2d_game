@@ -1,11 +1,24 @@
 {
-  "name": "canvas-ww2",
+  "name": "war_2d_game",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "http-server -c-1 -p 8080"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahroncich7/canvas-ww2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ahroncich7/canvas-ww2/issues"
+  },
+  "homepage": "https://github.com/ahroncich7/canvas-ww2#readme",
+  "devDependencies": {
+    "http-server": "^14.1.0"
+  },
+  "dependencies": {}
 }
