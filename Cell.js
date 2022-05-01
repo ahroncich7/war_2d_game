@@ -9,7 +9,8 @@ class Cell {
         this.makeClickable();
         this.color = this.getColor()
         this.isReachable = false
-        this.update()
+        this.unitInside = undefined;
+        gameHandler.objectsList.push(this)
     }
 
 
@@ -55,24 +56,25 @@ class Cell {
     makeClickable() {
         this.cellElement.addEventListener("click", ((e) => {
             e.stopPropagation()
-            if (gridMap.selectedUnit) {
-                gridMap.selectedUnit.moveTo(this)
-            } else {
-                if (this.cellElement.img) {
-
-                }
-            }
+            this.whenClicked()
         }))
     }
 
-    update() {
-        window.requestAnimationFrame(() => {
-            if (this.isReachable) {
-                this.cellElement.style.backgroundColor = "red"
-            } else {
-                this.cellElement.style.backgroundColor = this.color
+    whenClicked() {
+        if (gameHandler.selectedUnit) {
+            gameHandler.selectedUnit.moveTo(this)
+        } else {
+            if (this.cellElement.img) {
+
             }
-            this.update()
-        })
+        }
+    }
+
+    render() {
+        if (this.isReachable) {
+            this.cellElement.style.backgroundColor = "#ff000054"
+        } else {
+            this.cellElement.style.backgroundColor = this.color
+        }
     }
 }

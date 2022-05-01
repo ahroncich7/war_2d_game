@@ -1,19 +1,16 @@
 class GridSystem {
 
-    selectedUnit = undefined;
-
     constructor(matrix, gameArea) {
         this.matrix = matrix;
-        this.mapSize = {
-            x: gameArea.clientWidth,
-            y: gameArea.clientHeight
-        }
+        // this.mapSize = {
+        //     x: gameArea.clientWidth,
+        //     y: gameArea.clientHeight
+        // }
         this.cellSize = 40
         this.cellPadding = 1
         this.gameArea = gameArea
         this.makeGrid()
         this.getNeighbors()
-        this.escapeSelect()
     }
 
 
@@ -45,11 +42,8 @@ class GridSystem {
                 cellElement.style.left = (row * this.cellSize) + "px"
                 cellElement.style.bottom = (col * this.cellSize) + "px"
                 cellElement.classList.add("cellElement")
-                    // cellElement.style.backgroundColor = cell.getColor() //Esto debería ser una textura
                 cellElement.setAttribute("terrain-type", Cell.terraintype)
 
-                //Le asigna una funcion de click
-                // cellElement.addEventListener("click", (e) => (alert(Cell.x), alert(Cell.y)))
 
                 //Inserta el div en el DOM
                 this.gameArea.appendChild(cellElement)
@@ -59,7 +53,6 @@ class GridSystem {
         }
 
     }
-
 
     //Devuelve la celda específica (el objeto) del array bidimensional
     getCell(x, y) {
@@ -98,30 +91,6 @@ class GridSystem {
                     cell.neighbors.push(this.getCell(x - 1, y - 1))
             })
         });
-    }
-
-    selectUnit(unit) {
-        this.selectedUnit = unit;
-        unit.calculateReach()
-
-    }
-
-    unselectAll() {
-        this.selectedUnit = undefined
-        this.grid.forEach((e) => {
-            e.forEach((e) => {
-                e.isReachable = false
-            })
-        })
-    }
-
-    escapeSelect() {
-
-        document.addEventListener("keydown", (e) => {
-            if (e.key == "Escape") {
-                this.unselectAll()
-            }
-        })
     }
 
 }

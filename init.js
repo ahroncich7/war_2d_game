@@ -1,27 +1,14 @@
-let matrix = //
-    [
-        [0, 0, 0, 0, 0, 0, 0, 1],
-        [0, 0, 0, 0, 0, 0, 0, 1],
-        [2, 2, 0, 0, 1, 1, 1, 1],
-        [0, 2, 2, 2, 0, 0, 1, 1],
-        [0, 0, 2, 0, 0, 0, 1, 1],
-        [0, 0, 0, 0, 0, 0, 1, 1],
-        [0, 0, 0, 0, 0, 0, 0, 1],
-        [0, 0, 0, 0, 0, 0, 0, 1]
-    ]
-
-
-function changeMovement() {
-    unit.reach = document.querySelector("#movement").value
-}
-
-function update() {
-    gridMap = new GridSystem(matrix, document.querySelector(".gameArea"))
-    unit = new Unit("water")
-    gridMap.getCell(0, 0).isReachable = true
-    unit.moveTo(gridMap.getCell(0, 0))
-
-};
-
-
-window.requestAnimationFrame(update)
+let matrix = [
+    [0, 0, 0, 0, 0, 0, 0, 1],
+    [0, 0, 0, 0, 0, 0, 0, 1],
+    [2, 2, 0, 0, 1, 1, 1, 1],
+    [0, 2, 2, 2, 0, 0, 1, 1],
+    [0, 0, 2, 0, 0, 0, 1, 1],
+    [0, 0, 0, 0, 0, 0, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 1],
+    [0, 0, 0, 0, 0, 0, 0, 1]
+]
+gameHandler.start(matrix)
+gameHandler.setUnit({ x: 0, y: 1 }, "ground");
+gameHandler.setUnit({ x: 5, y: 4 }, "ground", "player2");
+gameHandler.update();

@@ -37,10 +37,11 @@ body {
     border: 1px solid white;
     justify-content: center;
     display: flex;
+    z-index: 1;
+    position: absolute;
 }
 
-.cellElement>* {
-    margin: auto;
-    max-height: 80%;
-    max-width: 80%;
+.unit {
+    z-index: 2;
+    position: absolute;
 }

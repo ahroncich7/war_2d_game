@@ -1,36 +1,70 @@
 class Unit {
     position;
-    constructor(type) {
+    movement;
+    sight;
+    attackStrength = 6;
+    defenseStrength = 8;
+
+    constructor(type, owner = "player1") {
         this.type = type;
-        this.texture = new Image()
-        this.texture.src = "/infantry.png"
-        this.reach = 2;
+        this.sprite = this.makeSprite()
+        this.movement = 2;
         this.makeClickable()
+        this.owner = owner
+        gameHandler.objectsList.push(this)
     }
 
-    render() {
-        let imageElement = document.createElement("img")
-        imageElement = this.texture
-        this.position.cellElement.appendChild(imageElement)
+    render() { //Funcion que se ejecuta cada frame para mostrar el sprite
+        let cellSize = gameHandler.gridMap.cellSize;
+        let padding = gameHandler.gridMap.cellPadding;
+        this.sprite.style.left = cellSize * this.position.x + padding * 2 + "px";
+        this.sprite.style.bottom = cellSize * this.position.y + padding * 2 + "px";
     }
 
     moveTo(cell) {
         if (cell.isReachable) {
+            this.position.unitInside = undefined
+            cell.unitInside = this
             this.position = cell;
-            this.render();
-            gridMap.unselectAll()
+            gameHandler.unselectAll();
         }
 
     }
 
+    makeSprite() {
+        let sprite = new Image(gameHandler.gridMap.cellSize - gameHandler.gridMap.cellPadding * 2)
+        sprite.src = "/infantry.png"
+        sprite.classList.add("unit")
+        gameHandler.gameArea.appendChild(sprite)
+        return sprite
+    }
 
     makeClickable() {
-        this.texture.addEventListener("click", ((e) => {
+        this.sprite.addEventListener("click", ((e) => {
             e.stopPropagation()
-            gridMap.selectUnit(this)
+            this.whenClicked()
         }))
     }
 
+    whenClicked() { //Setea lo que se dispara cuando se hace click en la unidad
+        if (this.owner == gameHandler.ownerTurn) {
+            gameHandler.selectUnit(this)
+            this.calculateReach()
+        } else {
+            if (gameHandler.selectedUnit) {
+                console.log("combate")
+                gameHandler.combatLaunch(gameHandler.selectedUnit, this)
+
+            } else {
+                gameHandler.inspect(this)
+            }
+        }
+    }
+
+
+
+
+    //Métodos para el PathFindidng
 
     calculateReach() {
 
@@ -42,13 +76,17 @@ class Unit {
 
         //Mete dentro de la lista los posibles nodos dentro del alcance, de nuevo,
         //sin contar los costes de terreno
-        gridMap.grid.forEach((e) => {
+
+        gameHandler.gridMap.grid.forEach((e) => {
             e.forEach((node) => {
-                if (this.distance(node, this.position) <= this.reach) {
+
+                if (this.distance(node, this.position) <= this.movement) {
                     potentiallyReacheableGrid.push(node)
                 }
             })
         })
+
+
 
 
         this.calculateCosts(this.position, potentiallyReacheableGrid)
@@ -58,7 +96,7 @@ class Unit {
                 // this.pathCost(this.position, node)
 
 
-            if (pathCost <= this.reach) {
+            if (pathCost <= this.movement && node != this.position && !(node.unitInside)) {
                 node.isReachable = true
             }
 
@@ -83,6 +121,8 @@ class Unit {
 
 
         })
+
+        openList = this.sortNearestToFarest(startNode, openList); //Ordena la lista a evaluar de mas cerca a mas lejos de la celda inicial
 
         openList.forEach((cell) => {
             let currentCell = cell
@@ -140,5 +180,25 @@ class Unit {
         })
 
         return lowerNode
+    }
+
+    sortNearestToFarest(startNode, list) {
+        let nearestNode;
+        let sortedList = [];
+
+
+        while (list.length > 0) {
+            let nearestValue = Infinity
+            list.forEach((node) => {
+                if (this.distance(startNode, node) <= nearestValue) {
+                    nearestValue = this.distance(startNode, node);
+                    nearestNode = node;
+                }
+            })
+            list = list.filter(v => v != nearestNode)
+            sortedList.push(nearestNode)
+        }
+
+        return sortedList;
     }
 }
