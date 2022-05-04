@@ -35,7 +35,7 @@ var gameHandler = {
         this.gridMap = new GridSystem(this.matrix, this.gameArea);
     },
 
-    setUnit(coordinate, type, owner = "player1") {
+    setUnit(coordinate = { x: 0, y: 0 }, type = "ground", owner = "player1") {
         let unit = new Unit(type, owner);
         unit.position = this.gridMap.getCell(coordinate.x, coordinate.y);
     },
