@@ -1,3 +1,4 @@
+var unitClassInstances = []
 class Unit {
     position;
     movement;
@@ -12,7 +13,9 @@ class Unit {
         this.makeClickable()
         this.owner = owner
         gameHandler.objectsList.push(this)
+        unitClassInstances.push(this)
     }
+
 
     render() { //Funcion que se ejecuta cada frame para mostrar el sprite
         let cellSize = gameHandler.gridMap.cellSize;
@@ -49,7 +52,6 @@ class Unit {
     whenClicked() { //Setea lo que se dispara cuando se hace click en la unidad
         if (this.owner == gameHandler.ownerTurn) {
             gameHandler.selectUnit(this)
-            this.calculateReach()
         } else {
             if (gameHandler.selectedUnit) {
                 console.log("combate")

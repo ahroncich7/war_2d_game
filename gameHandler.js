@@ -10,6 +10,7 @@ var gameHandler = {
     selectUnit(unit) {
         this.unselectAll();
         this.selectedUnit = unit;
+        unit.calculateReach();
     },
 
     unselectAll() {
@@ -35,7 +36,7 @@ var gameHandler = {
         this.gridMap = new GridSystem(this.matrix, this.gameArea);
     },
 
-    setUnit(coordinate = { x: 0, y: 0 }, type = "ground", owner = "player1") {
+    setUnit(type = "ground", owner = gameHandler.ownerTurn, coordinate = { x: 0, y: 0 }) {
         let unit = new Unit(type, owner);
         unit.position = this.gridMap.getCell(coordinate.x, coordinate.y);
     },
@@ -49,11 +50,16 @@ var gameHandler = {
         let u2D = (Math.floor(Math.random() * u2d + 1));
         console.log("unidad 2 ha sacado " + u2D)
         if ((u1A + u2D) > u2d) {
-            console.log(unit1.type + " ha acabado con " + unit2.type)
-            this.objectsList = this.objectsList.filter((value) => value != unit2);
-            unit2.sprite.remove()
+            alert(unit1.type + " ha acabado con " + unit2.type);
+            this.deleteObject(unit2);
         }
         this.unselectAll()
+    },
+
+    deleteObject(object) {
+        this.objectsList = this.objectsList.filter((value) => value != object);
+        object.sprite.remove();
+        try { object.position.unitInside = undefined } catch {}
     },
 
     inspect(unit) {
