@@ -2,7 +2,7 @@
     "name": "war_2d_game",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "api/main.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "serve": "http-server -c-1 -p 8080 -a 192.168.42.152"
