@@ -13,7 +13,13 @@ gameHandler.setUnit("ground", "player1", { x: 0, y: 1 });
 gameHandler.setUnit("ground", "player2", { x: 5, y: 4 });
 gameHandler.update();
 
+
+
+
+
 var socket = io.connect("http://localhost:8091", { "forceNew": true });
+
+
 
 socket.on("mensaje", function(data) {
 

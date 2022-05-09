@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "serve": "http-server -c-1 -p 8080"
+        "serve": "http-server -c-1 -p 8080 -a 192.168.42.152"
     },
     "author": "",
     "license": "ISC",
@@ -18,7 +18,11 @@
     },
     "homepage": "https://github.com/ahroncich7/canvas-ww2#readme",
     "devDependencies": {
-        "http-server": "^14.1.0"
+        "http-server": "^14.1.0",
+        "nodemon": "^2.0.16"
     },
-    "dependencies": {}
+    "dependencies": {
+        "express": "^4.18.1",
+        "socket.io": "^4.5.0"
+    }
 }

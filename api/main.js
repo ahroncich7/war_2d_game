@@ -2,29 +2,36 @@ var express = require("express");
 const { get } = require("https");
 const { connect } = require("net");
 var app = express();
+var cors = require("cors")
 var server = require("http").createServer(app);
 const PORT = 8091;
 
+app.use(cors())
 
-var io = require("socket.io")(server);
 
-// app.use(express.static("../"));
+
+var io = require("socket.io")(server, {
+    cors: {
+        origin: "*"
+    }
+})
+
+app.use(express.static("public"));
+app.use(express.static("api"))
+
+
 
 server.listen(PORT, function() {
     console.log(`server corriendo en http://localhost:${PORT}`)
 
 });
 
-app.get("/", function(request, response) {
-    response.sendFile(path.join(__dirname, '../index.html'));
-});
-
 io.on("connection", function(socket) {
-
-    console.log("alguien se conectó")
+    var clientIp = socket.request.connection.remoteAddress
+    console.log("alguien se conectó con " + clientIp)
 
     socket.on("getNewUnit", function(unit) {
         console.log("piden nueva unidad")
-        socket.emit("newUnit", { unit })
+        io.sockets.emit("newUnit", { unit })
     })
-});
+})
