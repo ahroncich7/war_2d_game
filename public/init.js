@@ -17,7 +17,7 @@ gameHandler.update();
 
 
 
-var socket = io.connect("http://localhost:8091", { "forceNew": true });
+var socket = io.connect("181.10.81.198:8091", { "forceNew": true });
 
 
 
