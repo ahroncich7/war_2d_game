@@ -6,9 +6,14 @@ var cors = require("cors")
 var server = require("http").createServer(app);
 const PORT = 8091;
 
+
+//Define app settings and static response
+
 app.use(cors())
 
+app.use(express.static("public"));
 
+app.use(express.static("api"))
 
 var io = require("socket.io")(server, {
     cors: {
@@ -16,8 +21,7 @@ var io = require("socket.io")(server, {
     }
 })
 
-app.use(express.static("public"));
-app.use(express.static("api"))
+
 
 
 
