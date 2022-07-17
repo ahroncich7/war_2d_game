@@ -9,19 +9,17 @@ const PORT = 8091;
 
 //Define app settings and static response
 
+//---------------------------------------
+
+
 app.use(cors())
 
 app.use(express.static("public"));
 
 app.use(express.static("api"))
 
-var io = require("socket.io")(server, {
-    cors: {
-        origin: "*"
-    }
-})
 
-
+//--------------------------------------
 
 
 
@@ -29,6 +27,15 @@ server.listen(PORT, function() {
     console.log(`server corriendo en http://localhost:${PORT}`)
 
 });
+
+
+
+var io = require("socket.io")(server, {
+    cors: {
+        origin: "*"
+    }
+})
+
 
 io.on("connection", function(socket) {
     var clientIp = socket.request.connection.remoteAddress
