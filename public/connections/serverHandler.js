@@ -1,12 +1,17 @@
-/*UNUSED
+var serverHandler = {
 
 
-serverHandler = {
 
-    socket: io.connect(),
+    socket : io.connect("181.10.81.198:8091", { "forceNew": true }),
+
+    sendMessage() {
+        this.socket.emit("message", "soy un mensjae")
+    },
+
+
 
     connectToServer() {
-        this.socket.on("mensaje", function(data) {
+        this.socket.on("mensaje", function (data) {
 
         })
     },
@@ -34,5 +39,3 @@ serverHandler = {
         })
     }
 }
-
-*/

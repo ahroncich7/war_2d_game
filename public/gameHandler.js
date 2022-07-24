@@ -1,4 +1,5 @@
 var gameHandler = {
+    
     objectsList: [],
     gridMap: undefined,
     selectedUnit: undefined,
@@ -6,6 +7,26 @@ var gameHandler = {
     gridMap: undefined,
     gameArea: document.getElementById("gameArea"),
     ownerTurn: "player1",
+
+    start(matrix) {
+        this.escapeSelect()
+        this.matrix = matrix
+        this.getMap()
+    },
+
+    escapeSelect() {
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key == "Escape") {
+                this.unselectAll()
+                console.log("salir")
+            }
+        })
+    },
+
+    getMap() {
+        this.gridMap = new GridSystem(this.matrix, this.gameArea);
+    },
 
     selectUnit(unit) {
         this.unselectAll();
@@ -22,19 +43,6 @@ var gameHandler = {
         })
     },
 
-    escapeSelect() {
-
-        document.addEventListener("keydown", (e) => {
-            if (e.key == "Escape") {
-                this.unselectAll()
-                console.log("salir")
-            }
-        })
-    },
-
-    getMap() {
-        this.gridMap = new GridSystem(this.matrix, this.gameArea);
-    },
 
     setUnit(type = "ground", owner = gameHandler.ownerTurn, coordinate = { x: 0, y: 0 }) {
         let unit = new Unit(type, owner);
@@ -67,11 +75,6 @@ var gameHandler = {
         return null
     },
 
-    start(matrix) {
-        this.escapeSelect()
-        this.matrix = matrix
-        this.getMap()
-    },
 
     update() {
         gameHandler.objectsList.forEach((object) => {

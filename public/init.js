@@ -1,3 +1,5 @@
+//-------------START-----------------//
+
 let matrix = [
     [0, 0, 0, 0, 0, 0, 0, 1],
     [0, 0, 0, 0, 0, 0, 0, 1],
@@ -17,14 +19,21 @@ gameHandler.update();
 
 
 
+
 var socket = io.connect("181.10.81.198:8091", { "forceNew": true });
 
 
 
-socket.on("mensaje", function(data) {
+// socket.on("mensaje", function (data) {
+//     console.log(data)
+// })
 
-})
+// socket.on("newUnit", function (unit) {
+//     gameHandler.setUnit(unit.type, unit.owner, unit.position)
+// })
 
-socket.on("newUnit", function(unit) {
-    gameHandler.setUnit(unit.type, unit.owner, unit.position)
-})
+
+//-------------------------------------------------------//
+
+console.log(serverHandler)
+serverHandler.sendMessage()

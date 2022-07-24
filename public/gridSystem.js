@@ -10,13 +10,13 @@ class GridSystem {
         this.cellPadding = 1
         this.gameArea = gameArea
         this.makeGrid()
-        this.getNeighbors()
+        this.setNeighbors()
     }
 
 
 
     //Define un método que crea la grid teniendo en cuenta la matriz
-    //de tipos de terreno, que es una especie de array de dos dimensiones (matrix[rows][cols])
+    //de tipos de terreno.
 
     makeGrid() {
 
@@ -66,7 +66,7 @@ class GridSystem {
     }
 
     //Asigna todos los vecinos de la celda dentro del objeto de la celda
-    getNeighbors() {
+    setNeighbors() {
         this.grid.forEach(element => {
             element.forEach((cell) => {
                 let grid = this.grid;
