@@ -46,6 +46,12 @@ io.on("connection", function (socket) {
         io.sockets.emit("newUnit", { unit })
     });
 
+    socket.on("moveUnit", function (data){
+        console.log(data)
+    }
+
+    )
+
     socket.on("message", (messageBody) => {
         console.log(messageBody)
         socket.emit("mensaje", "soy la contrarrespuesta")
