@@ -1,4 +1,5 @@
-var unitClassInstances = []
+var unitsInstances =[]
+let unitId = 0
 class Unit {
     position;
     movement;
@@ -7,14 +8,17 @@ class Unit {
     defenseStrength = 8;
 
     constructor(type, owner = "player1") {
+        this.id = unitId++
         this.type = type;
         this.sprite = this.makeSprite()
         this.movement = 2;
         this.makeClickable()
         this.owner = owner
         gameHandler.objectsList.push(this)
-        unitClassInstances.push(this)
+        unitsInstances.push(this)
+    
     }
+
 
 
     render() { //Funcion que se ejecuta cada frame para mostrar el sprite

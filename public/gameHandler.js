@@ -81,7 +81,7 @@ var gameHandler = {
     },
 
     getUnit(unitId) {
-        return unitInstances.find(unit => unit.id == unitId)
+        return unitsInstances.find(unit => unit.id == unitId)
     },
 
 
