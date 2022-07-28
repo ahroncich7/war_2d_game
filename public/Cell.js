@@ -15,6 +15,7 @@ class Cell {
 
 
     //Le asigna a la celda el atributo del tipo de terrano en base al tipo de terreno que le pasan
+    
     getTerrainType(cellType) {
         switch (cellType) {
             case 0:
@@ -62,11 +63,8 @@ class Cell {
 
     whenClicked() {
         if (gameHandler.selectedUnit) {
-            gameHandler.selectedUnit.moveTo(this)
-        } else {
-            if (this.cellElement.img) {
-
-            }
+            let position = {x: this.x, y: this.y};
+            serverHandler.sendMoveUnitToServer({unitId: gameHandler.selectedUnit.id, position: position} )
         }
     }
 
