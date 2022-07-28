@@ -2,7 +2,7 @@ var serverHandler = {
 
     socket: undefined,
 
-    serverIp = "181.1.13.97:8091",
+    serverIp : "181.1.13.97:8091",
 
     connectToServer() {
         this.socket = io.connect(serverIp, { "forceNew": true }),
