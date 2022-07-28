@@ -1,12 +1,17 @@
 var gameHandler = {
-    
+
     objectsList: [],
     gridMap: undefined,
     selectedUnit: undefined,
     matrix: undefined,
-    gridMap: undefined,
     gameArea: document.getElementById("gameArea"),
     ownerTurn: "player1",
+
+
+
+
+    //---------------------------- SET UP ------------------------------//
+
 
     start(matrix) {
         this.escapeSelect()
@@ -44,6 +49,11 @@ var gameHandler = {
     },
 
 
+
+
+
+    //------------------------UNIT HANDLER -------------------------------//
+
     setUnit(type = "ground", owner = gameHandler.ownerTurn, coordinate = { x: 0, y: 0 }) {
         let unit = new Unit(type, owner);
         unit.position = this.gridMap.getCell(coordinate.x, coordinate.y);
@@ -67,8 +77,15 @@ var gameHandler = {
     deleteObject(object) {
         this.objectsList = this.objectsList.filter((value) => value != object);
         object.sprite.remove();
-        try { object.position.unitInside = undefined } catch {}
+        try { object.position.unitInside = undefined } catch { }
     },
+
+    getUnit(unitId) {
+        return unitInstances.find(unit => unit.id == unitId)
+    },
+
+
+    //-----------------------------  ------------------------------//
 
     inspect(unit) {
         //aqui debería implementar el sistema de inspeccionar unidades
