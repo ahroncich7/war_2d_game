@@ -7,8 +7,9 @@ var server = require("http").createServer(app);
 const PORT = 8091;
 
 
-//----- Define app and static response
+//Define app settings and static response
 
+//---------------------------------------
 
 
 app.use(cors())
@@ -22,14 +23,11 @@ app.use(express.static("api"))
 
 
 
-
-//---------- Run Server ----------
-
 server.listen(PORT, function () {
     console.log(`server corriendo en http://localhost:${PORT}`)
+
 });
 
-//--------------------------------------
 
 
 var io = require("socket.io")(server, {
@@ -39,24 +37,23 @@ var io = require("socket.io")(server, {
 })
 
 
-//---------------- HEAR MESSAGES FROM CLIENT -------------------
-
 io.on("connection", function (socket) {
     var clientIp = socket.request.connection.remoteAddress
     console.log("alguien se conectó con " + clientIp)
-
 
     socket.on("getNewUnit", function (unit) {
         console.log("piden nueva unidad")
         io.sockets.emit("newUnit", { unit })
     });
 
-    socket.on("moveUnit", function (data) {
-        io.sockets.emit("moveUnit", data)
-    })
+    socket.on("moveUnit", function (data){
+        console.log(data)
+    }
+
+    )
 
     socket.on("message", (messageBody) => {
         console.log(messageBody)
-        io.sockets.emit("mensaje", "soy la contrarrespuesta")
+        socket.emit("mensaje", "soy la contrarrespuesta")
     });
 });
