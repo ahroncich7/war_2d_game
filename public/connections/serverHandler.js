@@ -1,41 +1,51 @@
 var serverHandler = {
 
+    socket: undefined,
 
-
-    socket : io.connect("181.10.81.198:8091", { "forceNew": true }),
-
-    sendMessage() {
-        this.socket.emit("message", "soy un mensjae")
-    },
-
-
+    serverIp = "181.1.13.97:8091",
 
     connectToServer() {
-        this.socket.on("mensaje", function (data) {
-
-        })
-    },
+        this.socket = io.connect(serverIp, { "forceNew": true }),
 
 
-    sendNewUnit(unit) {
-        this.socket.emit("getNewUnit", unit)
-    },
 
-
-    listenNewUnit() {
+        //---------------- HEAR MESSAGES FROM SERVER -------------------
+        
         this.socket.on("newUnit", (unit) => {
             gameHandler.setUnit(unit.type, unit.owner, unit.position)
-        })
-    },
+        }),
 
-
-    sendDestroyUnit(unit) {
-        this.socket.emit("destroyUnit", unit)
-    },
-
-    listenDestroyUnit() {
         this.socket.on("unitDestroyed", (unit) => {
             gameHandler.destroyUnit(unit)
+        }),
+
+        this.socket.on("moveUnit", (data) => {
+            data = JSON.parse(data)
+            let unit = gameHandler.getUnit(data.unitId) 
+            let pos = data.position
+            let theCell = gameHandler.gridMap.getCell(pos.x, pos.y)
+            gameHandler.selectUnit(unit)
+            unit.moveTo(theCell)
         })
+
+
+    },
+
+
+
+    //---------------- SEND MESSAGES TO SERVER -------------------
+
+    sendCreateNewUnitToServer(unit) {
+        this.socket.emit("createUnit", unit)
+    },
+
+    sendMoveUnitToServer(data) {
+        console.log("paso algo")
+        this.socket.emit("moveUnit", JSON.stringify(data))
+    },
+
+    sendDestroyUnitToServer(unit) {
+        this.socket.emit("destroyUnit", unit)
     }
+
 }
