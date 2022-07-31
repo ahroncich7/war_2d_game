@@ -70,7 +70,9 @@ class Unit {
 
 
 
-    //Métodos para el PathFindidng
+    //----------------------------------Métodos para el PathFindidng--------------------------------------------
+
+    
 
     calculateReach() {
 
@@ -128,7 +130,7 @@ class Unit {
 
         })
 
-        openList = this.sortNearestToFarest(startNode, openList); //Ordena la lista a evaluar de mas cerca a mas lejos de la celda inicial
+        openList = this.sortNearestToFarthest(startNode, openList); //Ordena la lista a evaluar de mas cerca a mas lejos de la celda inicial
 
         openList.forEach((cell) => {
             let currentCell = cell
@@ -188,7 +190,7 @@ class Unit {
         return lowerNode
     }
 
-    sortNearestToFarest(startNode, list) {
+    sortNearestToFarthest(startNode, list) {
         let nearestNode;
         let sortedList = [];
 

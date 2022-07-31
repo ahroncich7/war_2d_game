@@ -2,46 +2,51 @@ var serverHandler = {
 
     socket: undefined,
 
-    serverIp : "181.1.13.97:8091",
+    serverIp: "181.1.190.140:8091",
 
     connectToServer() {
-        this.socket = io.connect(this.serverIp, { "forceNew": true }),
-
+        this.socket = io.connect(this.serverIp, { "forceNew": true });
 
 
         //---------------- HEAR MESSAGES FROM SERVER -------------------
-        
-        this.socket.on("newUnit", (unit) => {
-            gameHandler.setUnit(unit.type, unit.owner, unit.position)
-        }),
 
-        this.socket.on("unitDestroyed", (unit) => {
-            gameHandler.destroyUnit(unit)
-        }),
+        this.socket.on("playerConfig", (data) => {
+            console.log(data);
+            gameHandler.playerHome = data.playerHome
 
-        this.socket.on("moveUnit", (data) => {
-            data = JSON.parse(data)
-            let unit = gameHandler.getUnit(data.unitId) 
-            let pos = data.position
-            let theCell = gameHandler.gridMap.getCell(pos.x, pos.y)
-            gameHandler.selectUnit(unit)
-            unit.moveTo(theCell)
         })
 
+        this.socket.on("newUnit", (data) => {
+            gameHandler.setUnit(data.type, data.owner, data.position)
+        });
 
+        this.socket.on("destroyUnit", (unitId) => {
+            gameHandler.deleteObject(gameHandler.getUnit(unitId))
+        });
+
+        this.socket.on("moveUnit", (data) => {
+            let unit = gameHandler.getUnit(data.unitId)
+            let pos = data.position
+            let Cell = gameHandler.gridMap.getCell(pos.x, pos.y)
+            gameHandler.selectUnit(unit)
+            unit.moveTo(Cell)
+        });
     },
 
 
 
     //---------------- SEND MESSAGES TO SERVER -------------------
 
-    sendCreateNewUnitToServer(unit) {
-        this.socket.emit("createUnit", unit)
+    sendSetNewPlayerToServer() {
+        this.socket.emit("setPlayer", gameHandler.ownerTurn)
+    },
+
+    sendCreateNewUnitToServer(data) {
+        this.socket.emit("createUnit", data)
     },
 
     sendMoveUnitToServer(data) {
-        console.log("paso algo")
-        this.socket.emit("moveUnit", JSON.stringify(data))
+        this.socket.emit("moveUnit", data)
     },
 
     sendDestroyUnitToServer(unit) {
