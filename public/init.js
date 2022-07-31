@@ -16,17 +16,16 @@ gameHandler.start(matrix)
 
 
 
-//------------------ SET UP PRE-DEFINED MAP AND UNITS ------------
+//------------------ SET UP --------------------------------------
 
 
 
-gameHandler.setUnit("ground", "player1", { x: 0, y: 1 });
-gameHandler.setUnit("ground", "player2", { x: 5, y: 4 });
+
 gameHandler.update();
 
 
 
 //-------------------------- TESTS -------------------------------
 
-console.log(serverHandler)
 serverHandler.connectToServer()
+serverHandler.sendSetNewPlayerToServer()
