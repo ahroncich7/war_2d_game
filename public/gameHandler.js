@@ -5,7 +5,8 @@ var gameHandler = {
     selectedUnit: undefined,
     matrix: undefined,
     gameArea: document.getElementById("gameArea"),
-    ownerTurn: "player1",
+    ownerTurn: prompt("Ingrese nombre de jugador"),
+    playerHome: {},
 
 
 
@@ -69,7 +70,7 @@ var gameHandler = {
         console.log("unidad 2 ha sacado " + u2D)
         if ((u1A + u2D) > u2d) {
             alert(unit1.type + " ha acabado con " + unit2.type);
-            this.deleteObject(unit2);
+            serverHandler.sendDestroyUnitToServer(unit2.id);
         }
         this.unselectAll()
     },
