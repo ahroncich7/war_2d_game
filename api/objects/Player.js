@@ -14,8 +14,8 @@ module.exports = class Player {
     setInitialPosition(){
         if(this.Id == 1) return {x:0, y: 0}
         if(this.Id == 2) return {x:10, y: 0}
-        if(this.Id == 3) return {x:3, y: 10}
-        if(this.Id == 4) return {x:40, y: 10}
+        if(this.Id == 3) return {x:0, y: 10}
+        if(this.Id == 4) return {x:10, y: 10}
     }
 
     static players = []

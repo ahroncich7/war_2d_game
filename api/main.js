@@ -3,7 +3,6 @@ const { get } = require("https");
 const { connect } = require("net");
 var app = express();
 var cors = require("cors");
-const {playersHandler} = require("./playersHandler");
 var server = require("http").createServer(app);
 const PORT = 8091;
 
