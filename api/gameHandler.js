@@ -1,9 +1,9 @@
-const { fight } = require("./combatSystem")
+const { fight } = require("./services/combatSystem")
 const grid = require("./grid")
-const { calculateReach } = require("./pathfinding")
-const  Unit  = require("./Unit")
+const { calculateReach } = require("./services/pathfinding")
+const  Unit  = require("./objects/Unit")
 const mapGrid = require("../tools/mapa.json")
-const { validateMovement } = require("./validations")
+const { validateMovement } = require("./services/validations")
 
 
 ///////////////////////////// Game Handling //////////////////////
