@@ -10,8 +10,7 @@ module.exports = playersHandler = {
         let player = {
             playerId: this.playersNumber,
             playerName: playerName,
-            playerHome: {x: x, y:0},
-        
+            playerHome: {x: x, y:0}
         }
 
         this.playersList.push(player)
