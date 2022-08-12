@@ -1,11 +1,10 @@
-const { incrementId } = require("./Unit")
 
 module.exports = class Player {
 
     constructor(name) {
 
 
-        Id: incrementId()
+        Id: this.incrementId()
         Name: name
         InitialPosition: { x = 0, y = 0 }
     }
@@ -18,7 +17,14 @@ module.exports = class Player {
         if(this.Id == 4) return {x:10, y: 10}
     }
 
-    static players = []
+    static playersList = []
+
+    static getPlayer(playerId) {
+        let player = Player.playersList.find(player => player.Id == playerId) 
+        if(player) return player
+        else console.log(`No existe la unidad con ID: ${unitId}`)         
+
+    }
 
     static incrementId() {
         if (!this.latestId) this.latestId = 1

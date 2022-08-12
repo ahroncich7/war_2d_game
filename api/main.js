@@ -3,6 +3,7 @@ const { get } = require("https");
 const { connect } = require("net");
 var app = express();
 var cors = require("cors");
+const Player = require("./objects/Player");
 var server = require("http").createServer(app);
 const PORT = 8091;
 
@@ -48,8 +49,9 @@ io.on("connection", function (socket) {
     
 
     socket.on("setPlayer", function (data){
-        console.log(global.playersHandler.setNewPlayer(data));
-        socket.emit("playerConfig", global.playersHandler.playersList[global.playersHandler.playersList.length -1])
+        let newPlayer = new Player(data.name)
+        console.log(newPlayer);
+        socket.emit("playerConfig", newPlayer)
     })
 
     socket.on("createUnit", function (data) {
