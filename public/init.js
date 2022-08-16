@@ -1,31 +1,34 @@
+import { serverHandler } from "./connections/serverHandler.js";
+import { Cell } from "./object/cell.js";
+import { Unit } from "./object/unit.js";
+import map from "./resources/mapa.js";
+import { gameHandler } from "./services/gameHandler.js";
+import { startMap } from "./services/mapHandler.js";
+
+
+
+
 //-------------START-----------------//
 
-let matrix = [
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [2, 2, 0, 0, 1, 1, 1, 1],
-    [0, 2, 2, 2, 0, 0, 1, 1],
-    [0, 0, 2, 0, 0, 0, 1, 1],
-    [0, 0, 0, 0, 0, 0, 1, 1],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 1]
-]
-
-gameHandler.start(matrix)
-
-
-
+// let playerName = prompt("nombre jugador");
+let gameData = {
+    map: {
+        mapUrl: "/images/quad Grid2.jpg",
+        mapGrid: map
+    }
+}
+startMap(gameData.map)
 
 //------------------ SET UP --------------------------------------
 
-
-
-
-gameHandler.update();
-
+serverHandler.connectToServer()
+  
 
 
 //-------------------------- TESTS -------------------------------
 
-serverHandler.connectToServer()
+window.Unit = Unit;
+window.gameHandler = gameHandler;
+window.Cell = Cell;
+window.serverHandler = serverHandler;
 serverHandler.sendSetNewPlayerToServer()

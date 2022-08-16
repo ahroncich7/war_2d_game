@@ -1,7 +1,7 @@
-const { getCell } = require("./grid");
-const grid = require("./grid");
 
-class Unit {
+const grid = require("../grid.js");
+
+module.exports = class Unit {
     id;
     position = { x: 0, y: 0 };
     type;
@@ -11,7 +11,7 @@ class Unit {
     attackStrength = 6;
     defenseStrength = 8;
 
-    constructor(type, owner = "player1") {
+    constructor(type, owner) {
         this.id = Unit.incrementId()
         this.type = type;
         this.movement = 2;
@@ -75,5 +75,4 @@ class Unit {
     }
 }
 
-module.exports = Unit
 

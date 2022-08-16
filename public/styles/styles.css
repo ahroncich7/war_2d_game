@@ -10,8 +10,8 @@ body {
 
 .mainArea {
     background-color: orange;
-    width: 640px;
-    height: 480px;
+    width: 90%;
+    height: 100vh;
     position: relative;
     display: flex;
     flex-flow: column;
@@ -26,22 +26,31 @@ body {
 
 .gameArea {
     background-color: lightblue;
-    width: 320px;
+    width: 80%;
     flex-grow: 6;
     margin: 20px;
     align-self: center;
     position: relative;
+    overflow: scroll;
 }
 
-.cellElement {
-    border: 1px solid white;
-    justify-content: center;
+.map {
+    width: max-content;
+    background-image: url("/images/quad\ Grid2.jpg");
+    background-size: auto;
+    display: grid;
+    grid-template-columns: repeat(26, 1fr);
+}
+
+.map > * {
+    width: 62px;
+    height: 62px;
+    border: 1px solid black;
     display: flex;
-    z-index: 1;
-    position: absolute;
+    align-content: center;
+    justify-content: center; 
 }
 
-.unit {
-    z-index: 2;
-    position: absolute;
+.map img{
+    margin: auto;
 }

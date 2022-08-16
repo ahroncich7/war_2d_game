@@ -4,15 +4,15 @@ module.exports = class Player {
     constructor(name) {
 
 
-        Id: this.incrementId()
-        Name: name
-        InitialPosition: { x = 0, y = 0 }
+        this.Id = Player.incrementId(),
+        this.Name = name,
+        this.initialPosition = this.setInitialPosition()
     }
 
 
     setInitialPosition(){
-        if(this.Id == 1) return {x:0, y: 0}
-        if(this.Id == 2) return {x:10, y: 0}
+        if(this.Id == 1) return {x:14, y: 10}
+        if(this.Id == 2) return {x:22, y: 6}
         if(this.Id == 3) return {x:0, y: 10}
         if(this.Id == 4) return {x:10, y: 10}
     }

@@ -1,8 +1,10 @@
-var serverHandler = {
+import  {gameHandler}  from "../services/gameHandler.js";
+
+export var serverHandler = {
 
     socket: undefined,
 
-    serverIp: "181.90.115.21:8091",
+    serverIp: "181.14.115.50:8091",
 
     connectToServer() {
         this.socket = io.connect(this.serverIp, { "forceNew": true });
@@ -12,12 +14,15 @@ var serverHandler = {
 
         this.socket.on("playerConfig", (data) => {
             console.log(data);
-            gameHandler.playerHome = data.playerHome
+            gameHandler.initialPosition = data.InitialPosition
+            gameHandler.player = data
 
         })
 
         this.socket.on("newUnit", (data) => {
-            gameHandler.setUnit(data.type, data.owner, data.position)
+            console.log(data)
+            gameHandler.createUnit(data.id, data.type, data.owner);
+            gameHandler.update()
         });
 
         this.socket.on("destroyUnit", (unitId) => {
@@ -25,12 +30,12 @@ var serverHandler = {
         });
 
         this.socket.on("moveUnit", (data) => {
-            let unit = gameHandler.getUnit(data.unitId)
-            let pos = data.position
-            let Cell = gameHandler.gridMap.getCell(pos.x, pos.y)
-            gameHandler.selectUnit(unit)
-            unit.moveTo(Cell)
+           gameHandler.moveUnit(data.Id, data.unit)
         });
+
+        this.socket.on("reacheableCells", (data)=>{
+            console.log(data)
+        })
     },
 
 
@@ -38,11 +43,19 @@ var serverHandler = {
     //---------------- SEND MESSAGES TO SERVER -------------------
 
     sendSetNewPlayerToServer() {
-        this.socket.emit("setPlayer", gameHandler.ownerTurn)
+        this.socket.emit("setPlayer", {name: gameHandler.player})
     },
 
-    sendCreateNewUnitToServer(data) {
-        this.socket.emit("createUnit", data)
+    sendSelectUnit(unit){
+        this.socket.emit("selectUnit", unit)
+    },
+
+    sendCreateNewUnitToServer(type) {
+        let $data = {
+            type: type,
+            player: gameHandler.player
+        } 
+        this.socket.emit("createUnit", $data)
     },
 
     sendMoveUnitToServer(data) {
@@ -54,3 +67,4 @@ var serverHandler = {
     }
 
 }
+

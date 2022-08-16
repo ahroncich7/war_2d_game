@@ -1,6 +1,5 @@
-const grid = require("./grid")
-const { map: gridMatrix } = require("./grid")
-
+const grid = require("../grid.js")
+const { map: gridMatrix } = require("../grid.js")
 
 function calculateReach(unit) {
 

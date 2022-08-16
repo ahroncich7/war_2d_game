@@ -4,9 +4,12 @@ const { connect } = require("net");
 var app = express();
 var cors = require("cors");
 const Player = require("./objects/Player");
+const { calculateReach } = require("./services/pathfinding");
+const grid = require("./grid");
+const  Unit  = require("./objects/Unit");
+const { validateMovement, validateCreateUnit } = require("./services/validations");
 var server = require("http").createServer(app);
 const PORT = 8091;
-
 
 //----- Define app and static response
 
@@ -49,19 +52,31 @@ io.on("connection", function (socket) {
     
 
     socket.on("setPlayer", function (data){
+        console.log(data)
         let newPlayer = new Player(data.name)
         console.log(newPlayer);
         socket.emit("playerConfig", newPlayer)
     })
 
+    socket.on("selectUnit", function (data){
+        console.log(data.Id)
+        console.log(Unit)
+        calculateReach(Unit.getUnit(data.Id))
+        socket.emit("reacheableCells", grid.map.filter(cell=> cell.filter(cell=>cell.isReachable)))
+        
+    })
+
     socket.on("createUnit", function (data) {
         console.log("Se crea nueva unidad")
-        io.sockets.emit("newUnit", data)
+        console.log(data)
+        let res = validateCreateUnit(data.type, data.player)
+        io.sockets.emit("newUnit", res)
     });
 
     socket.on("moveUnit", function (data) {
-        console.log("Se mueve una unidad")
-        io.sockets.emit("moveUnit", data)
+        console.log("Se mueve una unidad");
+        let res = validateMovement(data.unitId, data.position);
+        io.sockets.emit("moveUnit", res);
     });
 
     socket.on("destroyUnit", function (data) {
