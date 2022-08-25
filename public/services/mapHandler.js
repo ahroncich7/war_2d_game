@@ -18,7 +18,7 @@ function setMapTiles(map){
     let divMap = mapElement.querySelectorAll("div");
     for (let x = 0; x < map.height; x++) {
         for (let y = 0; y < map.width; y++) {
-            new Tile(map.mapTiles[x][y], {x:y,y:x }, divMap[map.width*x + y])
+            new Tile(map.mapTile[x][y], {x:y,y:x }, divMap[map.width*x + y])
         }
         
     }

@@ -1,13 +1,11 @@
 var express = require("express");
-const mapGrid = require("../tools/mapa.json");
 const { get } = require("https");
 const { connect } = require("net");
 var app = express();
 var cors = require("cors");
-const Player = require("./objects/Player");
 const grid = require("./grid");
-const { validateMovement, validateCreateUnit, validateSelectUnit } = require("./services/validations");
-
+const { sendSelectUnitToClients, sendMapToClient } = require("./services/serversideHandler");
+const mapGrid = require("../tools/mapa.json")
 var server = require("http").createServer(app);
 const PORT = 8091;
 
@@ -49,33 +47,32 @@ io.on("connection", function (socket) {
 
     console.log("alguien se conectó con la IP" + clientIp + " y el id " + socket.id)
 
+    sendMapToClient(socket);
 
-    socket.on("setPlayer", function (data) {
+    // socket.on("setPlayer", function (data) {
         
-    })
+    // })
 
     socket.on("selectUnit", function (data) {
-        let res = validateSelectUnit(data)
-        res.isValid ? console.log(`Unit id ${res.id} selected`) : console.log(res.message)
-        socket.emit("selectUnit", res)
+        sendSelectUnitToClients(socket);
     })
 
-    socket.on("createUnit", function (data) {
-        let res = validateCreateUnit(data.type, data.player)
-        res.isValid ? console.log(`Unit id ${res.id} type ${res.type} created`) : console.log(res.message)
-        io.sockets.emit("newUnit", res)
-    });
+    // socket.on("createUnit", function (data) {
+    //     let res = validateCreateUnit(data.type, data.player)
+    //     res.isValid ? console.log(`Unit id ${res.id} type ${res.type} created`) : console.log(res.message)
+    //     io.sockets.emit("newUnit", res)
+    // });
 
-    socket.on("moveUnit", function (data) {
-        let res = validateMovement(data.id, data.position);
-        res.isValid ? console.log(`Unit id ${data.id} moved`) : console.log(res.message)
-        io.sockets.emit("moveUnit", res)
-    });
+    // socket.on("moveUnit", function (data) {
+    //     let res = validateMovement(data.id, data.position);
+    //     res.isValid ? console.log(`Unit id ${data.id} moved`) : console.log(res.message)
+    //     io.sockets.emit("moveUnit", res)
+    // });
 
-    socket.on("destroyUnit", function (data) {
-        console.log("Se destruye una unidad")
-        io.sockets.emit("destroyUnit", data)
-    });
+    // socket.on("destroyUnit", function (data) {
+    //     console.log("Se destruye una unidad")
+    //     io.sockets.emit("destroyUnit", data)
+    // });
 
 });
 
