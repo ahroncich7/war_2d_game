@@ -41,7 +41,6 @@ exports.validateCreateUnit = function (type, owner) {
     }
     if (true) {//condicion para validar
         let unit = new Unit(type, owner)
-        console.log(`Unit type ${unit.type} created`)
         res.id = unit.id;
         res.type = unit.type;
         res.owner = unit.owner;
@@ -66,7 +65,6 @@ exports.validateSelectUnit = function (data) {
         unit = Unit.getUnit(data.id)
     }
     catch (e) {
-        console.log(e);
         res.message = `Not Unit with id ${data.id}`
         return res
     }

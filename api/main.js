@@ -47,31 +47,28 @@ var io = require("socket.io")(server, {
 io.on("connection", function (socket) {
     var clientIp = socket.request.connection.remoteAddress
 
-    console.log("alguien se conectó con la IP" + clientIp+ " y el id " + socket.id)
-    
+    console.log("alguien se conectó con la IP" + clientIp + " y el id " + socket.id)
 
-    socket.on("setPlayer", function (data){
-        console.log(data)
-        let newPlayer = new Player(data.name)
-        console.log(newPlayer);
-        socket.emit("playerConfig", newPlayer)
+
+    socket.on("setPlayer", function (data) {
+        
     })
 
-    socket.on("selectUnit", function (data){
+    socket.on("selectUnit", function (data) {
         let res = validateSelectUnit(data)
-        res.isValid ? console.log(`Unit id ${data.id} selected]`) : console.log(res.message)
+        res.isValid ? console.log(`Unit id ${res.id} selected`) : console.log(res.message)
         socket.emit("selectUnit", res)
-        
     })
 
     socket.on("createUnit", function (data) {
         let res = validateCreateUnit(data.type, data.player)
+        res.isValid ? console.log(`Unit id ${res.id} type ${res.type} created`) : console.log(res.message)
         io.sockets.emit("newUnit", res)
     });
 
     socket.on("moveUnit", function (data) {
         let res = validateMovement(data.id, data.position);
-        res.isValid ? console.log(`Unit id ${data.id} Moved]`) : console.log(res.message)
+        res.isValid ? console.log(`Unit id ${data.id} moved`) : console.log(res.message)
         io.sockets.emit("moveUnit", res)
     });
 

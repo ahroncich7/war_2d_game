@@ -4,8 +4,8 @@ module.exports = class Player {
     constructor(name) {
 
 
-        this.Id = Player.incrementId(),
-        this.Name = name,
+        this.id = Player.incrementId(),
+        this.name = name,
         this.initialPosition = this.setInitialPosition()
     }
 
@@ -20,7 +20,7 @@ module.exports = class Player {
     static playersList = []
 
     static getPlayer(playerId) {
-        let player = Player.playersList.find(player => player.Id == playerId) 
+        let player = Player.playersList.find(player => player.id == playerId) 
         if(player) return player
         else console.log(`No existe la unidad con ID: ${unitId}`)         
 
