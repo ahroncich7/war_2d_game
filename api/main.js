@@ -1,13 +1,13 @@
 var express = require("express");
+const mapGrid = require("../tools/mapa.json");
 const { get } = require("https");
 const { connect } = require("net");
 var app = express();
 var cors = require("cors");
 const Player = require("./objects/Player");
-const { calculateReach } = require("./services/pathfinding");
 const grid = require("./grid");
-const  Unit  = require("./objects/Unit");
-const { validateMovement, validateCreateUnit } = require("./services/validations");
+const { validateMovement, validateCreateUnit, validateSelectUnit } = require("./services/validations");
+
 var server = require("http").createServer(app);
 const PORT = 8091;
 
@@ -26,11 +26,10 @@ app.use(express.static("api"))
 
 
 
-
 //---------- Run Server ----------
 
 server.listen(PORT, function () {
-    console.log(`server corriendo en http://localhost:${PORT}`)
+    console.log(`server corriendo en Puerto: ${PORT}`)
 });
 
 //--------------------------------------
@@ -59,24 +58,21 @@ io.on("connection", function (socket) {
     })
 
     socket.on("selectUnit", function (data){
-        console.log(data.Id)
-        console.log(Unit)
-        calculateReach(Unit.getUnit(data.Id))
-        socket.emit("reacheableCells", grid.map.filter(cell=> cell.filter(cell=>cell.isReachable)))
+        let res = validateSelectUnit(data)
+        res.isValid ? console.log(`Unit id ${data.id} selected]`) : console.log(res.message)
+        socket.emit("selectUnit", res)
         
     })
 
     socket.on("createUnit", function (data) {
-        console.log("Se crea nueva unidad")
-        console.log(data)
         let res = validateCreateUnit(data.type, data.player)
         io.sockets.emit("newUnit", res)
     });
 
     socket.on("moveUnit", function (data) {
-        console.log("Se mueve una unidad");
-        let res = validateMovement(data.unitId, data.position);
-        io.sockets.emit("moveUnit", res);
+        let res = validateMovement(data.id, data.position);
+        res.isValid ? console.log(`Unit id ${data.id} Moved]`) : console.log(res.message)
+        io.sockets.emit("moveUnit", res)
     });
 
     socket.on("destroyUnit", function (data) {
@@ -85,3 +81,9 @@ io.on("connection", function (socket) {
     });
 
 });
+
+
+
+//////////////////////// TESTS ///////////////////////////////
+
+grid.makeGrid(mapGrid)

@@ -12,7 +12,11 @@ module.exports = class Cell {
         switch (terrainType) {
             case "grass":
                 return 1;
+            case "coast":
+                return 1;
             case "woods":
+                return 2;
+            case "snow":
                 return 2;
             case "hills":
                 return 3;

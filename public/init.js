@@ -1,6 +1,6 @@
 import { serverHandler } from "./connections/serverHandler.js";
-import { Cell } from "./object/cell.js";
-import { Unit } from "./object/unit.js";
+import { Tile } from "./object/Tile.js";
+import { UnitObject } from "./object/UnitObject.js";
 import map from "./resources/mapa.js";
 import { gameHandler } from "./services/gameHandler.js";
 import { startMap } from "./services/mapHandler.js";
@@ -8,16 +8,10 @@ import { startMap } from "./services/mapHandler.js";
 
 
 
-//-------------START-----------------//
 
-// let playerName = prompt("nombre jugador");
-let gameData = {
-    map: {
-        mapUrl: "/images/quad Grid2.jpg",
-        mapGrid: map
-    }
-}
-startMap(gameData.map)
+//-------------START-----------------//
+startMap(map)
+
 
 //------------------ SET UP --------------------------------------
 
@@ -27,8 +21,10 @@ serverHandler.connectToServer()
 
 //-------------------------- TESTS -------------------------------
 
-window.Unit = Unit;
+window.Tile = Tile;
 window.gameHandler = gameHandler;
-window.Cell = Cell;
+window.UnitObject = UnitObject;
 window.serverHandler = serverHandler;
-serverHandler.sendSetNewPlayerToServer()
+
+
+

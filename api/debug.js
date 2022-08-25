@@ -3,7 +3,7 @@ const grid = require("./grid")
 const { calculateReach } = require("./services/pathfinding")
 const  Unit  = require("./objects/Unit")
 const mapGrid = require("../tools/mapa.json")
-const { validateMovement } = require("./services/validations")
+const { validateMovement, validateSelectUnit } = require("./services/validations")
 
 
 ///////////////////////////// Game Handling //////////////////////
@@ -28,4 +28,6 @@ unit1.position = {x:17, y:10}
 unit5.position = {x:18, y:9}
 fight(unit1, unit5)
 unit4.destroy()
+validateSelectUnit
+validateMovement(1, {x:16, y:10} )
 debugger

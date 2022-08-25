@@ -1,9 +1,9 @@
 const grid = require("../grid.js")
 const { map: gridMatrix } = require("../grid.js")
 
-function calculateReach(unit) {
-
-
+exports.calculateReach = function (unit) {
+    
+    let reacheableCells = []
     //Declara una variable que estará compuesta de todos los nodos 
     //dentro del area de alcance, sin contar los costes de terreno. Esto es para 
     //ahorrar recursos al evaluar un area mas cercana
@@ -11,10 +11,9 @@ function calculateReach(unit) {
 
     //Mete dentro de la lista los posibles nodos dentro del alcance, de nuevo,
     //sin contar los costes de terreno
-
+    
     gridMatrix.forEach((e) => {
         e.forEach((node) => {
-
             if (getDistance(node, grid.getCell(unit.position)) <= unit.movement) {
                 potentiallyReacheableGrid.push(node)
             }
@@ -30,13 +29,15 @@ function calculateReach(unit) {
         let pathCost = node.costf
         // this.pathCost(this.position, node)
 
-
+        node.isReachable = false;
         if (pathCost <= unit.movement && node != grid.getCell(unit.position) && !(node.unitInside)) {
-            node.isReachable = true
+            node.isReachable = true;
+            reacheableCells.push(node)
         }
 
     })
 
+    return reacheableCells;
 
 }
 
@@ -162,6 +163,3 @@ function setNeighbors(cell) {
 
     return neighbors
 }
-
-
-exports.calculateReach = calculateReach

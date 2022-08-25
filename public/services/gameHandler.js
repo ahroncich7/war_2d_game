@@ -1,6 +1,6 @@
-import { serverHandler } from "../connections/serverHandler.js";
-import { Cell } from "../object/cell.js";
-import { Unit } from "../object/unit.js";
+import { Tile } from "../object/Tile.js";
+import { UnitObject } from "../object/UnitObject.js";
+
 
 export var gameHandler = {
 
@@ -9,32 +9,43 @@ export var gameHandler = {
     player: prompt("ingrese nombre"),
     turnPlayer : "Player1",
     selectedUnit : undefined,
-    initialPosition: undefined,
+    initialPosition: {x:16, y:10},
 
-    selectUnit(unit){
+    selectUnit(unitId){
+        let unit = UnitObject.getUnit(unitId)
         this.selectedUnit = unit;
-        console.log("Unit: ", unit, " selected");
-        serverHandler.sendSelectUnit(unit)
+        this.update()
     },
 
 
     createUnit(id, type, owner ) {
-        let unit = new Unit(id, type, owner)
-        unit.moveTo(owner.initialPosition)
+        let unit = new UnitObject(id, type, owner);
+        unit.render()
     },
 
-    moveUnit(unit, position) {
-        unit.moveTo(position)
+    moveUnit(id, position) {
+        let unit = UnitObject.getUnit(id);
+        unit.moveTo(position);
+        this.unselectAll()
     },
 
     destroyUnit(unit) {
     },
 
     update(){
-        Unit.unitList.forEach(unit=>{
+        UnitObject.unitList.forEach(unit=>{
             unit.render()
         })
-    }
 
+        Tile.tileMap.forEach(tile=>{
+            tile.render()
+        })
+    },
+
+    unselectAll(){
+        this.selectedUnit = undefined;
+        Tile.tileMap.forEach(tile=>tile.isReacheable = false)
+        gameHandler.update()
+    }
 
 }

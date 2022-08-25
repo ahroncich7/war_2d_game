@@ -1,24 +1,24 @@
-import { Cell } from "../object/cell.js";
+import { Tile } from "../object/Tile.js";
 
 let mapElement = document.querySelector(".map");
 
 export function startMap(map){
-    printMap(map.mapGrid)
-    setMapTiles(map.mapGrid)
+    printMap(map)
+    setMapTiles(map)
     
 }
 
-function printMap(mapGrid) {
-    let width = mapGrid.width;
-    let height = mapGrid.height; 
+function printMap(map) {
+    let width = map.width;
+    let height = map.height; 
     mapElement.innerHTML = ((`<div></div>`).repeat(width * height))
 }
 
-function setMapTiles(mapGrid){
+function setMapTiles(map){
     let divMap = mapElement.querySelectorAll("div");
-    for (let x = 0; x < mapGrid.height; x++) {
-        for (let y = 0; y < mapGrid.width; y++) {
-            new Cell(mapGrid.mapTiles[x][y], {x:y,y:x }, divMap[mapGrid.width*x + y])
+    for (let x = 0; x < map.height; x++) {
+        for (let y = 0; y < map.width; y++) {
+            new Tile(map.mapTiles[x][y], {x:y,y:x }, divMap[map.width*x + y])
         }
         
     }

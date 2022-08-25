@@ -1,10 +1,11 @@
-import  {gameHandler}  from "../services/gameHandler.js";
+import { Tile } from "../object/Tile.js";
+import { gameHandler } from "../services/gameHandler.js";
 
 export var serverHandler = {
 
     socket: undefined,
 
-    serverIp: "181.14.115.50:8091",
+    serverIp: "181.1.107.37:8091",
 
     connectToServer() {
         this.socket = io.connect(this.serverIp, { "forceNew": true });
@@ -13,6 +14,11 @@ export var serverHandler = {
         //---------------- HEAR MESSAGES FROM SERVER -------------------
 
         this.socket.on("playerConfig", (data) => {
+            if (data.isValid){
+
+            }
+            
+            
             console.log(data);
             gameHandler.initialPosition = data.InitialPosition
             gameHandler.player = data
@@ -20,9 +26,11 @@ export var serverHandler = {
         })
 
         this.socket.on("newUnit", (data) => {
-            console.log(data)
-            gameHandler.createUnit(data.id, data.type, data.owner);
-            gameHandler.update()
+            if(data.isValid){
+                createUnit(data)
+            }else{
+                console.log(data.message)
+            }
         });
 
         this.socket.on("destroyUnit", (unitId) => {
@@ -30,11 +38,19 @@ export var serverHandler = {
         });
 
         this.socket.on("moveUnit", (data) => {
-           gameHandler.moveUnit(data.Id, data.unit)
+            if (data.isValid) {
+                moveUnit(data)
+            } else {
+                console.log(data.message);
+            }
         });
 
-        this.socket.on("reacheableCells", (data)=>{
-            console.log(data)
+        this.socket.on("selectUnit", (data) => {
+            if (data.isValid) {
+                selectUnit(data);
+            } else {
+                console.log("Not Valid Select");
+            }
         })
     },
 
@@ -43,22 +59,24 @@ export var serverHandler = {
     //---------------- SEND MESSAGES TO SERVER -------------------
 
     sendSetNewPlayerToServer() {
-        this.socket.emit("setPlayer", {name: gameHandler.player})
+        this.socket.emit("setPlayer", { name: gameHandler.player })
     },
 
-    sendSelectUnit(unit){
-        this.socket.emit("selectUnit", unit)
+    sendSelectUnitToServer(data) {
+        console.log(data.message)
+        this.socket.emit("selectUnit", data)
     },
 
     sendCreateNewUnitToServer(type) {
         let $data = {
             type: type,
             player: gameHandler.player
-        } 
+        }
         this.socket.emit("createUnit", $data)
     },
 
     sendMoveUnitToServer(data) {
+        console.log(data.message)
         this.socket.emit("moveUnit", data)
     },
 
@@ -68,3 +86,21 @@ export var serverHandler = {
 
 }
 
+
+////////////////////// Server Services ////////////////////////
+
+
+function selectUnit(data) {
+    data.data.forEach(cell => {
+        Tile.getCell(cell.position).isReacheable = true
+    })
+    gameHandler.selectUnit(data.id)
+}
+
+function moveUnit(data) {
+    gameHandler.moveUnit(data.data.id, data.data.position);
+}
+
+function createUnit(data){
+    gameHandler.createUnit(data.id, data.type, data.owner)
+}

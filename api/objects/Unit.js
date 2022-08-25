@@ -3,7 +3,7 @@ const grid = require("../grid.js");
 
 module.exports = class Unit {
     id;
-    position = { x: 0, y: 0 };
+    position = { x: 16, y: 10 };
     type;
     movement;
     owner;
@@ -14,9 +14,9 @@ module.exports = class Unit {
     constructor(type, owner) {
         this.id = Unit.incrementId()
         this.type = type;
-        this.movement = 2;
-        this.owner = owner
-        Unit.unitsInstances.push(this)
+        this.movement = 3;
+        this.owner = owner;
+        Unit.unitsInstances.push(this);
     }
 
     moveTo(position) {
@@ -54,7 +54,7 @@ module.exports = class Unit {
     static getUnit(unitId) {
         let unit = Unit.unitsInstances.find(unit => unit.id == unitId) 
         if(unit) return unit
-        else console.log(`No existe la unidad con ID: ${unitId}`)         
+        else throw(`Unit with ID: ${unitId} doesnt exist`)         
 
     }
 
