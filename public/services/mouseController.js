@@ -4,23 +4,23 @@ import { gameHandler } from "./gameHandler.js"
 export function whenClicked(tile) {
 
     let unit = tile.unitInside;
-    let selectedUnit = gameHandler.selectedUnit;
+    
 
     if (unit) {
 
-        clickUnitTile(unit, selectedUnit, tile)
+        clickUnitTile(unit, tile)
 
     } else {
 
-        clickEmptyTile(selectedUnit, tile)
+        clickEmptyTile(tile)
 
     }
 
 
 };
 
-function clickUnitTile(unit, selectedUnit, tile) {
-
+function clickUnitTile(unit,tile) {
+    let selectedUnit = gameHandler.selectedUnit
     if (selectedUnit) {
 
         if (unit.owner == gameHandler.player) {
@@ -48,8 +48,9 @@ function clickUnitTile(unit, selectedUnit, tile) {
     }
 }
 
-function clickEmptyTile(selectedUnit, tile) {
+function clickEmptyTile(tile) {
 
+    let selectedUnit = gameHandler.selectUnit;
     if (selectedUnit) {
 
         sendMoveUnit(selectedUnit, tile)

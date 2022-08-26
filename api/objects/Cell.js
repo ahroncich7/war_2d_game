@@ -6,6 +6,7 @@ module.exports = class Cell {
         this.costf;
         this.isReachable = false;
         this.unitInside = undefined;
+        Cell.cellList.push(this);
     }
 
     getCostByTerrainType(terrainType) {
@@ -26,5 +27,7 @@ module.exports = class Cell {
                 break;
         }
     }
+
+    static cellList = []
 
 }

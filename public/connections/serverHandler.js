@@ -22,12 +22,12 @@ export var serverHandler = {
         this.socket.on("newUnit", (data) => {
             console.log(data, data.unit.sprite)
             if(data.isValid){
-                gameHandler.unitList = data.unitList;
-                gameHandler.update();
+                gameHandler.updateUnits(data.unitList);
+                gameHandler.updateTiles(data.cellList);
             }else{
                 console.log(data.message);
             }
-        });
+        }),
 
         // this.socket.on("destroyUnit", (unitId) => {
         //     gameHandler.deleteObject(gameHandler.getUnit(unitId))
@@ -43,11 +43,12 @@ export var serverHandler = {
 
         this.socket.on("selectUnit", (data) => {
             console.log(data)
-            // if (data.isValid) {
-            //     gameHandler.selectUnit(data);
-            // } else {
-            //     console.log("Not Valid Select");
-            // }
+            if (data.isValid) {
+                gameHandler.selectUnit(data.id);
+                gameHandler.updateTiles(data.reachableCells)
+            } else {
+                console.log("Not Valid Select");
+            }
         })
     },
 
@@ -59,10 +60,10 @@ export var serverHandler = {
     //     this.socket.emit("setPlayer", { name: gameHandler.player })
     // },
 
-    // sendSelectUnitToServer(data) {
-    //     console.log(data.message)
-    //     this.socket.emit("selectUnit", data)
-    // },
+    sendSelectUnitToServer(data) {
+        console.log(data.message)
+        this.socket.emit("selectUnit", data)
+    },
 
     sendCreateNewUnitToServer(type) {
         let data = {

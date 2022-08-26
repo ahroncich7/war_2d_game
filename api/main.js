@@ -57,9 +57,9 @@ io.on("connection", function (socket) {
         
     // })
 
-    // socket.on("selectUnit", function (data) {
-    //     sendSelectUnitToClients(socket);
-    // })
+    socket.on("selectUnit", function (data) {
+        sendSelectUnitToClients(socket, data);
+    })
 
 
     // socket.on("moveUnit", function (data) {

@@ -4,17 +4,16 @@ import { Tile } from "../object/Tile.js";
 export var gameHandler = {
 
 
-    playersList :[],
+    playersList: [],
     player: prompt("ingrese nombre"),
-    turnPlayer : "Player1",
-    selectedUnit : undefined,
-    initialPosition: {x:16, y:10},
+    turnPlayer: "Player1",
+    selectedUnit: undefined,
+    initialPosition: { x: 16, y: 10 },
     unitList: [],
 
-    selectUnit(unitId){
+    selectUnit(unitId) {
         let unit = this.getUnit(unitId);
         this.selectedUnit = unit;
-        this.update()
     },
 
 
@@ -32,30 +31,45 @@ export var gameHandler = {
     // destroyUnit(unit) {
     // },
 
-    update(){
-        this.renderUnits();
+    update() {
+        // this.renderUnits();
+        this.updateTiles();
+    },
 
-        Tile.tileMap.forEach(tile=>{
+    // renderUnits() {
+
+    //     this.unitList.forEach(unit => {
+    //         let spriteContainer = Tile.getCell(unit.position).spriteContainer;
+    //         spriteContainer.innerHTML += `
+    //         <img src=../images/${unit.sprite}></img>    
+    //         `
+    //     })
+    // },
+
+    updateUnits(unitList = this.unitList) {
+        this.unitList = unitList;
+        // this.renderUnits();
+    },
+
+    updateTiles(cellList = Tile.tileMap) {
+        cellList.forEach(cell => {
+            let tile = Tile.getCell(cell.position);
+            tile.isReachable = cell.isReachable;
+            tile.unitInside = cell.unitInside;
+        })
+
+        Tile.tileMap.forEach(tile => {
             tile.render()
         })
     },
 
-    renderUnits(){
-        this.unitList.forEach(unit => {
-            let spriteContainer = Tile.getCell(unit.position).spriteContainer;
-            spriteContainer.innerHTML += `
-            <img src=../images/${unit.sprite}></img>    
-            `
-        })
-    },
-
-    unselectAll(){
+    unselectAll() {
         this.selectedUnit = undefined;
-        Tile.tileMap.forEach(tile=>tile.isReacheable = false)
+        Tile.tileMap.forEach(tile => tile.isReacheable = false)
         gameHandler.update()
     },
 
-    getUnit(unitId){
+    getUnit(unitId) {
         return this.unitList.find(unit => unit.id == unitId)
     }
 }

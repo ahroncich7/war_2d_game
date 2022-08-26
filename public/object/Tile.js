@@ -6,7 +6,7 @@ export class Tile {
     position;
     spriteContainer;
     unitInside;
-    isReacheable = false;
+    isReachable = false;
 
     constructor(type, position, spriteContainer) {
 
@@ -21,10 +21,18 @@ export class Tile {
 
 
     render() {
-        if (this.isReacheable) {
+        if (this.isReachable) {
             this.spriteContainer.style.setProperty("background-color", "rgba(20, 80, 20, 0.45)")
         } else {
             this.spriteContainer.style.setProperty("background-color", "")
+        }
+
+        if(this.unitInside){
+            this.spriteContainer.innerHTML = `
+            <img src=../images/${this.unitInside.sprite}></img>    
+            `
+        }else{
+            this.spriteContainer.innerHTML = `${this.position.x},${this.position.y}`
         }
     }
 

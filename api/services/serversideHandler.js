@@ -14,11 +14,12 @@ exports.sendMapToClient = function (socket) {
 exports.sendCreateUnitToClients = function (sockets, data) {
     let res = validateCreateUnit(data.type, data.player)
     res.unitList = Unit.unitsInstances;
+    res.cellList = Cell.cellList;
     res.isValid ? console.log(`Unit id ${res.unit.id} type ${res.unit.type} created`) : console.log(res.message)
     sockets.emit("newUnit", res)
 };
 
-exports.sendSelectUnitToClients = function (socket) {
+exports.sendSelectUnitToClients = function (socket, data) {
     let res = validateSelectUnit(data)
     
     res.isValid ? console.log(`Unit id ${res.id} selected`) : console.log(res.message)
