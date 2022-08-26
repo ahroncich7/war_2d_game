@@ -33,17 +33,12 @@ exports.validateMovement = function (unitId, position) {
 
 exports.validateCreateUnit = function (type, owner) {
     let res = {
-        id: "",
-        type,
-        owner,
+        unit: "",
         isValid: false,
         message: "Invalid to create unit"
     }
     if (true) {//condicion para validar
-        let unit = new Unit(type, owner)
-        res.id = unit.id;
-        res.type = unit.type;
-        res.owner = unit.owner;
+        res.unit = new Unit(type, owner);
         res.isValid = true;
         res.message = "Valid to create unit"
     }

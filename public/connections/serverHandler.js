@@ -19,13 +19,14 @@ export var serverHandler = {
             console.log(data.message)
         })
         
-        // this.socket.on("newUnit", (data) => {
-        //     if(data.isValid){
-        //         createUnit(data)
-        //     }else{
-        //         console.log(data.message)
-        //     }
-        // });
+        this.socket.on("newUnit", (data) => {
+            console.log(data, data.unit.sprite)
+            if(data.isValid){
+                gameHandler.unitList = data.unitList;
+            }else{
+                console.log(data.message)
+            }
+        });
 
         // this.socket.on("destroyUnit", (unitId) => {
         //     gameHandler.deleteObject(gameHandler.getUnit(unitId))
@@ -61,13 +62,13 @@ export var serverHandler = {
     //     this.socket.emit("selectUnit", data)
     // },
 
-    // sendCreateNewUnitToServer(type) {
-    //     let $data = {
-    //         type: type,
-    //         player: gameHandler.player
-    //     }
-    //     this.socket.emit("createUnit", $data)
-    // },
+    sendCreateNewUnitToServer(type) {
+        let data = {
+            type: type,
+            player: gameHandler.player
+        }
+        this.socket.emit("createUnit", data)
+    },
 
     // sendMoveUnitToServer(data) {
     //     console.log(data.message)
@@ -84,17 +85,4 @@ export var serverHandler = {
 ////////////////////// Server Services ////////////////////////
 
 
-function selectUnit(data) {
-    data.data.forEach(cell => {
-        Tile.getCell(cell.position).isReacheable = true
-    })
-    gameHandler.selectUnit(data.id)
-}
 
-function moveUnit(data) {
-    gameHandler.moveUnit(data.data.id, data.data.position);
-}
-
-function createUnit(data){
-    gameHandler.createUnit(data.id, data.type, data.owner)
-}

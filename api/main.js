@@ -4,7 +4,7 @@ const { connect } = require("net");
 var app = express();
 var cors = require("cors");
 const grid = require("./grid");
-const { sendSelectUnitToClients, sendMapToClient } = require("./services/serversideHandler");
+const { sendSelectUnitToClients, sendMapToClient, sendCreateUnitToClients } = require("./services/serverSideHandler");
 const mapGrid = require("../tools/mapa.json")
 var server = require("http").createServer(app);
 const PORT = 8091;
@@ -49,19 +49,18 @@ io.on("connection", function (socket) {
 
     sendMapToClient(socket);
 
+    socket.on("createUnit", function (data) {
+        sendCreateUnitToClients(io.sockets, data);
+    });
+
     // socket.on("setPlayer", function (data) {
         
     // })
 
-    socket.on("selectUnit", function (data) {
-        sendSelectUnitToClients(socket);
-    })
+    // socket.on("selectUnit", function (data) {
+    //     sendSelectUnitToClients(socket);
+    // })
 
-    // socket.on("createUnit", function (data) {
-    //     let res = validateCreateUnit(data.type, data.player)
-    //     res.isValid ? console.log(`Unit id ${res.id} type ${res.type} created`) : console.log(res.message)
-    //     io.sockets.emit("newUnit", res)
-    // });
 
     // socket.on("moveUnit", function (data) {
     //     let res = validateMovement(data.id, data.position);

@@ -10,6 +10,7 @@ export var gameHandler = {
     turnPlayer : "Player1",
     selectedUnit : undefined,
     initialPosition: {x:16, y:10},
+    unitList: [],
 
     selectUnit(unitId){
         let unit = UnitObject.getUnit(unitId)
@@ -18,27 +19,36 @@ export var gameHandler = {
     },
 
 
-    createUnit(id, type, owner ) {
-        let unit = new UnitObject(id, type, owner);
-        unit.render()
-    },
+    // createUnit(id, type, owner ) {
+    //     let unit = new UnitObject(id, type, owner);
+    //     unit.render()
+    // },
 
-    moveUnit(id, position) {
-        let unit = UnitObject.getUnit(id);
-        unit.moveTo(position);
-        this.unselectAll()
-    },
+    // moveUnit(id, position) {
+    //     let unit = UnitObject.getUnit(id);
+    //     unit.moveTo(position);
+    //     this.unselectAll()
+    // },
 
-    destroyUnit(unit) {
-    },
+    // destroyUnit(unit) {
+    // },
 
-    update(){
-        UnitObject.unitList.forEach(unit=>{
-            unit.render()
-        })
+    // update(){
+    //     UnitObject.unitList.forEach(unit=>{
+    //         unit.render()
+    //     })
 
-        Tile.tileMap.forEach(tile=>{
-            tile.render()
+    //     Tile.tileMap.forEach(tile=>{
+    //         tile.render()
+    //     })
+    // },
+
+    renderUnits(){
+        this.unitList.forEach(unit => {
+            let spriteContainer = Tile.getCell(unit.position).spriteContainer;
+            spriteContainer.innerHTML += `
+            <img src=../images/${unit.sprite}></img>    
+            `
         })
     },
 

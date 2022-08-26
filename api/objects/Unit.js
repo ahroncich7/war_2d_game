@@ -1,4 +1,3 @@
-
 const grid = require("../grid.js");
 
 module.exports = class Unit {
@@ -8,6 +7,7 @@ module.exports = class Unit {
     movement;
     owner;
     sight;
+    sprite;
     attackStrength = 6;
     defenseStrength = 8;
 
@@ -16,6 +16,7 @@ module.exports = class Unit {
         this.type = type;
         this.movement = 3;
         this.owner = owner;
+        this.sprite = this.getSprite();
         Unit.unitsInstances.push(this);
     }
 
@@ -37,8 +38,16 @@ module.exports = class Unit {
         Unit.destroyUnit(this.id)
     }
 
-
-
+    getSprite() {
+        let src;
+        switch (this.type) {
+            case "soldier":
+                src = `infantry.png`
+            default:
+                break;
+        }
+        return src
+    }
 
 
     ////////////////////// STATICS ////////////////////////////

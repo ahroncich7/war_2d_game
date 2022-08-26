@@ -20,7 +20,5 @@ function setMapTiles(map){
         for (let y = 0; y < map.width; y++) {
             new Tile(map.mapTile[x][y], {x:y,y:x }, divMap[map.width*x + y])
         }
-        
     }
-
 }
