@@ -1,5 +1,4 @@
 import { Tile } from "../object/Tile.js";
-import { UnitObject } from "../object/UnitObject.js";
 
 
 export var gameHandler = {
@@ -13,7 +12,7 @@ export var gameHandler = {
     unitList: [],
 
     selectUnit(unitId){
-        let unit = UnitObject.getUnit(unitId)
+        let unit = this.getUnit(unitId);
         this.selectedUnit = unit;
         this.update()
     },
@@ -33,15 +32,13 @@ export var gameHandler = {
     // destroyUnit(unit) {
     // },
 
-    // update(){
-    //     UnitObject.unitList.forEach(unit=>{
-    //         unit.render()
-    //     })
+    update(){
+        this.renderUnits();
 
-    //     Tile.tileMap.forEach(tile=>{
-    //         tile.render()
-    //     })
-    // },
+        Tile.tileMap.forEach(tile=>{
+            tile.render()
+        })
+    },
 
     renderUnits(){
         this.unitList.forEach(unit => {
@@ -56,6 +53,9 @@ export var gameHandler = {
         this.selectedUnit = undefined;
         Tile.tileMap.forEach(tile=>tile.isReacheable = false)
         gameHandler.update()
-    }
+    },
 
+    getUnit(unitId){
+        return this.unitList.find(unit => unit.id == unitId)
+    }
 }

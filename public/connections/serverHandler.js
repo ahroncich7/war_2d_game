@@ -23,8 +23,9 @@ export var serverHandler = {
             console.log(data, data.unit.sprite)
             if(data.isValid){
                 gameHandler.unitList = data.unitList;
+                gameHandler.update();
             }else{
-                console.log(data.message)
+                console.log(data.message);
             }
         });
 
@@ -40,13 +41,14 @@ export var serverHandler = {
         //     }
         // });
 
-        // this.socket.on("selectUnit", (data) => {
-        //     if (data.isValid) {
-        //         selectUnit(data);
-        //     } else {
-        //         console.log("Not Valid Select");
-        //     }
-        // })
+        this.socket.on("selectUnit", (data) => {
+            console.log(data)
+            // if (data.isValid) {
+            //     gameHandler.selectUnit(data);
+            // } else {
+            //     console.log("Not Valid Select");
+            // }
+        })
     },
 
 

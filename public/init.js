@@ -14,7 +14,7 @@ import { gameHandler } from "./services/gameHandler.js";
 //------------------ SET UP --------------------------------------
 
 serverHandler.connectToServer()
-  
+
 
 
 //-------------------------- TESTS -------------------------------
@@ -24,5 +24,7 @@ window.gameHandler = gameHandler;
 window.UnitObject = UnitObject;
 window.serverHandler = serverHandler;
 
-
+document.querySelector("#add-unit").addEventListener("click", (e) => {
+    serverHandler.sendCreateNewUnitToServer("soldier")
+})
 
