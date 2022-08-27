@@ -2,33 +2,28 @@ const { calculateReach } = require("./pathfinding.js");
 
 const Unit = require("../objects/Unit");
 const Cell = require("../objects/Cell.js");
-const grid = require("../grid.js");
+const grid = require("../objects/grid");
+const gameHandlerServer = require("./gameHandlerServer.js");
 
 exports.validateMovement = function (unitId, position) {
     let res = ({
-        data: undefined,
         isValid: false,
         message: "Not Valid Movement"
     })
-    try {
-        let unit = Unit.getUnit(unitId)
-        console.log(grid.getCell(position).isReachable) // BORRAR 
-        if (
-            unit.owner == "ale"
-            && Unit.unitsInstances.find($unit => $unit.id == unitId)
-            && grid.getCell(position).isReachable
-        ) {
-            unit.moveTo(position);
-            res.data = { id: unitId, position: position };
 
-            console.log(res.isValid)//BORRAR
-            res.isValid = true;
-            res.message = "Valid Movement"
-        }
-    } catch { console.log("hubo un error") }
+    let unit = Unit.getUnit(unitId);
+
+    if (
+        unit.owner == "ale"
+        && Unit.unitsInstances.find($unit => $unit.id == unitId)
+        && grid.getCell(position).isReachable
+    ) {
+        gameHandlerServer.moveUnit(unit, position)
+        res.isValid = true;
+        res.message = "Valid Movement"
+    }
 
     return res
-
 }
 
 exports.validateCreateUnit = function (type, owner) {

@@ -6,7 +6,7 @@ export var serverHandler = {
 
     socket: undefined,
 
-    serverIp: "181.1.107.37:8091",
+    serverIp: "181.90.60.86:8091",
 
     connectToServer() {
         this.socket = io.connect(this.serverIp, { "forceNew": true });
@@ -33,13 +33,14 @@ export var serverHandler = {
         //     gameHandler.deleteObject(gameHandler.getUnit(unitId))
         // });
 
-        // this.socket.on("moveUnit", (data) => {
-        //     if (data.isValid) {
-        //         moveUnit(data)
-        //     } else {
-        //         console.log(data.message);
-        //     }
-        // });
+        this.socket.on("moveUnit", (data) => {
+            if (data.isValid) {
+                gameHandler.updateUnits(data.unitList);
+                gameHandler.updateTiles(data.cellList);
+            } else {
+                console.log(data.message);
+            }
+        });
 
         this.socket.on("selectUnit", (data) => {
             console.log(data)
@@ -73,10 +74,9 @@ export var serverHandler = {
         this.socket.emit("createUnit", data)
     },
 
-    // sendMoveUnitToServer(data) {
-    //     console.log(data.message)
-    //     this.socket.emit("moveUnit", data)
-    // },
+    sendMoveUnitToServer(data) {
+        this.socket.emit("moveUnit", data)
+    },
 
     // sendDestroyUnitToServer(unit) {
     //     this.socket.emit("destroyUnit", unit)

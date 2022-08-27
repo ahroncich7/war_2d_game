@@ -1,4 +1,4 @@
-const grid = require("../grid.js");
+const grid = require("./grid");
 
 module.exports = class Unit {
     id;
@@ -26,7 +26,6 @@ module.exports = class Unit {
             grid.getCell(this.position).unitInside = undefined
             cell.unitInside = this
             this.position = position;
-            console.log(`Unidad ${this.id} movida a:`, cell.position)
         }
         else {
             console.log("unit " + this.id + ": Unreacheable target" + grid.getCell(position))

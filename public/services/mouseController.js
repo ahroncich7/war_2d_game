@@ -50,7 +50,7 @@ function clickUnitTile(unit,tile) {
 
 function clickEmptyTile(tile) {
 
-    let selectedUnit = gameHandler.selectUnit;
+    let selectedUnit = gameHandler.selectedUnit;
     if (selectedUnit) {
 
         sendMoveUnit(selectedUnit, tile)

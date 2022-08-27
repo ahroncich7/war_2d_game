@@ -1,5 +1,5 @@
-const grid = require("../grid.js")
-const { map: gridMatrix } = require("../grid.js")
+const grid = require("../objects/grid")
+const { map: gridMatrix } = require("../objects/grid")
 
 exports.calculateReach = function (unit) {
     
@@ -97,6 +97,7 @@ function getPathCost(startNode, endNode) {
     }
 
     path.pop() //Remueve el último nodo que es el del comienzo
+
     let pathCost = 0;
     path.forEach((node) => {
         pathCost += node.costf

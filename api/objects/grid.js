@@ -1,4 +1,4 @@
-const Cell = require("./objects/Cell.js");
+const Cell = require("./Cell.js");
 module.exports = grid = {
 
     map: [],
