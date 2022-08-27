@@ -22,7 +22,7 @@ exports.sendCreateUnitToClients = function (sockets, data) {
 
 exports.sendSelectUnitToClients = function (socket, data) {
     let res = validateSelectUnit(data)
-    
+    res.cellList = Cell.cellList;
     res.isValid ? console.log(`Unit id ${res.id} selected`) : console.log(res.message)
     socket.emit("selectUnit", res)
 };

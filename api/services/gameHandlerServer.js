@@ -1,12 +1,15 @@
 const Cell = require("../objects/Cell");
+const grid = require("../objects/grid");
 const Unit = require("../objects/Unit")
 
-module.exports =  gameHandlerServer = {
+module.exports = gameHandlerServer = {
 
-    moveUnit(unit, position){
-        unit.moveTo(position);
-        Cell.cellList.forEach(cell=>{
-            cell.isReachable = false
-        })
+    moveUnit(unit, position) {
+        if (!grid.getCell(position).unitInside) {
+            unit.moveTo(position);
+            Cell.cellList.forEach(cell => {
+                cell.isReachable = false
+            })
+        }
     }
 }

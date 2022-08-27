@@ -1,26 +1,10 @@
+const Cell = require("../objects/Cell")
 const grid = require("../objects/grid")
-const { map: gridMatrix } = require("../objects/grid")
 
 exports.calculateReach = function (unit) {
     
     let reacheableCells = []
-    //Declara una variable que estará compuesta de todos los nodos 
-    //dentro del area de alcance, sin contar los costes de terreno. Esto es para 
-    //ahorrar recursos al evaluar un area mas cercana
-    let potentiallyReacheableGrid = []
-
-    //Mete dentro de la lista los posibles nodos dentro del alcance, de nuevo,
-    //sin contar los costes de terreno
-    
-    gridMatrix.forEach((e) => {
-        e.forEach((node) => {
-            if (getDistance(node, grid.getCell(unit.position)) <= unit.movement) {
-                potentiallyReacheableGrid.push(node)
-            }
-        })
-    })
-
-
+    let potentiallyReacheableGrid = Cell.cellList;
 
 
     calculateCosts(grid.getCell(unit.position), potentiallyReacheableGrid)

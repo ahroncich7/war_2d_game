@@ -46,7 +46,7 @@ export var serverHandler = {
             console.log(data)
             if (data.isValid) {
                 gameHandler.selectUnit(data.id);
-                gameHandler.updateTiles(data.reachableCells)
+                gameHandler.updateTiles(data.cellList)
             } else {
                 console.log("Not Valid Select");
             }

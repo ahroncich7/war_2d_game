@@ -2,7 +2,7 @@ const grid = require("./grid");
 
 module.exports = class Unit {
     id;
-    position = { x: 16, y: 10 };
+    position;
     type;
     movement;
     owner;
@@ -22,18 +22,14 @@ module.exports = class Unit {
 
     moveTo(position) {
         let cell = grid.getCell(position)
-        if (cell.isReachable) {
-            grid.getCell(this.position).unitInside = undefined
-            cell.unitInside = this
-            this.position = position;
-        }
-        else {
-            console.log("unit " + this.id + ": Unreacheable target" + grid.getCell(position))
-        }
+        try{grid.getCell(this.position).unitInside = undefined} 
+        catch{console.log("No unit Position")}
+        cell.unitInside = this
+        this.position = position;
 
     }
 
-    destroy(){
+    destroy() {
         Unit.destroyUnit(this.id)
     }
 
@@ -60,9 +56,9 @@ module.exports = class Unit {
     }
 
     static getUnit(unitId) {
-        let unit = Unit.unitsInstances.find(unit => unit.id == unitId) 
-        if(unit) return unit
-        else throw(`Unit with ID: ${unitId} doesnt exist`)         
+        let unit = Unit.unitsInstances.find(unit => unit.id == unitId)
+        if (unit) return unit
+        else throw (`Unit with ID: ${unitId} doesnt exist`)
 
     }
 
@@ -76,9 +72,9 @@ module.exports = class Unit {
             grid.getCell(unit.position).unitInside = undefined;
             Unit.unitsInstances = Unit.unitsInstances.filter((unit) => {
                 return unit.id != unitId
-                })
+            })
             console.log(`Unidad con ID : ${unit.id} DESTRUIDA`)
-            
+
         }
     }
 }

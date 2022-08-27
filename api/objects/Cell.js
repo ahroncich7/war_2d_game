@@ -14,7 +14,7 @@ module.exports = class Cell {
             case "grass":
                 return 1;
             case "coast":
-                return 1;
+                return 2;
             case "woods":
                 return 2;
             case "snow":

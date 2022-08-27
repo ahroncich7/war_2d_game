@@ -34,9 +34,9 @@ exports.validateCreateUnit = function (type, owner) {
     }
     if (true) {//condicion para validar
         res.unit = new Unit(type, owner);
+        gameHandlerServer.moveUnit(res.unit, { x: 17, y: 10 })
         res.isValid = true;
         res.message = "Valid to create unit"
-        grid.getCell(res.unit.position).unitInside = res.unit
     }
     return res
 }
@@ -46,7 +46,6 @@ exports.validateSelectUnit = function (data) {
     let unit;
     let res = ({
         id: data.id,
-        reachableCells: undefined,
         isValid: false,
         message: "Not Valid Selection"
     })
@@ -67,8 +66,8 @@ exports.validateSelectUnit = function (data) {
 
     try {
 
-        let reachableCells = calculateReach(unit)
-        res.reachableCells = reachableCells
+        calculateReach(unit)
+
     }
     catch (e) {
         console.log(e)
