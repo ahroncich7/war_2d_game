@@ -10,47 +10,35 @@ export var serverHandler = {
 
     connectToServer() {
         this.socket = io.connect(this.serverIp, { "forceNew": true });
+        this.sendReqMap("nada");
 
 
         //---------------- HEAR MESSAGES FROM SERVER -------------------
 
-        this.socket.on("setMap", (data)=>{
+        this.socket.on("resMap", (data) => {
             startMap(data.map);
             console.log(data.message)
         })
-        
-        this.socket.on("newUnit", (data) => {
-            console.log(data, data.unit.sprite)
-            if(data.isValid){
-                gameHandler.updateUnits(data.unitList);
-                gameHandler.updateTiles(data.cellList);
-            }else{
-                console.log(data.message);
-            }
-        }),
 
-        // this.socket.on("destroyUnit", (unitId) => {
-        //     gameHandler.deleteObject(gameHandler.getUnit(unitId))
-        // });
+        this.socket.on("resSelectUnit", (data) => {
+            gameHandler.selectUnit(data.id);
+            gameHandler.updateTiles(data.cellList)
+            console.log(data.message);
+        })
 
-        this.socket.on("moveUnit", (data) => {
-            if (data.isValid) {
-                gameHandler.updateUnits(data.unitList);
-                gameHandler.updateTiles(data.cellList);
-            } else {
-                console.log(data.message);
-            }
+        this.socket.on("resCreateUnit", (data) => {
+            gameHandler.updateUnits(data.unitList);
+            gameHandler.updateTiles(data.cellList);
+            console.log(data.message);
+        })
+
+        this.socket.on("resMoveUnit", (data) => {
+            gameHandler.updateUnits(data.unitList);
+            gameHandler.updateTiles(data.cellList);
+            console.log(data.message);
         });
 
-        this.socket.on("selectUnit", (data) => {
-            console.log(data)
-            if (data.isValid) {
-                gameHandler.selectUnit(data.id);
-                gameHandler.updateTiles(data.cellList)
-            } else {
-                console.log("Not Valid Select");
-            }
-        })
+
     },
 
 
@@ -63,20 +51,24 @@ export var serverHandler = {
 
     sendSelectUnitToServer(data) {
         console.log(data.message)
-        this.socket.emit("selectUnit", data)
+        this.socket.emit("reqSelectUnit", data)
     },
 
     sendCreateNewUnitToServer(type) {
         let data = {
             type: type,
-            player: gameHandler.player
+            owner: gameHandler.player
         }
-        this.socket.emit("createUnit", data)
+        this.socket.emit("reqCreateUnit", data)
     },
 
     sendMoveUnitToServer(data) {
-        this.socket.emit("moveUnit", data)
+        this.socket.emit("reqMoveUnit", data)
     },
+
+    sendReqMap(data) {
+        this.socket.emit("reqMap", data);
+    }
 
     // sendDestroyUnitToServer(unit) {
     //     this.socket.emit("destroyUnit", unit)

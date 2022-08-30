@@ -9,11 +9,10 @@ function fight(unit1, unit2) {
     let defensiveBonus = getDefensiveBonus(unit2);
 
     if ((u1Dice + u2Dice) > unit2.defenseStrength + defensiveBonus) {
-        unit2.destroy()
+        unit2.destroy();
         console.log("El atacante eliminó al defensor");
-    } else {
-
-    }
+        return true
+    } 
 }
 
 function getDefensiveBonus(unit) {

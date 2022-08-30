@@ -2,19 +2,19 @@ const Cell = require("../objects/Cell")
 const grid = require("../objects/grid")
 
 exports.calculateReach = function (unit) {
-    
+
     let reacheableCells = []
     let potentiallyReacheableGrid = Cell.cellList;
 
 
-    calculateCosts(grid.getCell(unit.position), potentiallyReacheableGrid)
+    calculateCosts(grid.getCell(unit.position), potentiallyReacheableGrid, unit)
 
     potentiallyReacheableGrid.forEach((node) => {
         let pathCost = node.costf
         // this.pathCost(this.position, node)
 
         node.isReachable = false;
-        if (pathCost <= unit.movement && node != grid.getCell(unit.position) && !(node.unitInside)) {
+        if (pathCost <= unit.movement && node != grid.getCell(unit.position)) {
             node.isReachable = true;
             reacheableCells.push(node)
         }
@@ -26,19 +26,20 @@ exports.calculateReach = function (unit) {
 }
 
 //calcula los costes de moverse del nodo inicial hasta cualquier nodo de una lista de nodos
-function calculateCosts(startNode, grid) {
+function calculateCosts(startNode, grid, unit) {
 
     let openList = [startNode]; //crea lista de los nodos pendientes de evaluar. Son todos los que estan a su alcance
 
-    grid.forEach((e) => { //Inicializa los costos de todos los nodos a evaluar
+    grid.forEach((cell) => { //Inicializa los costos de todos los nodos a evaluar
 
-        if (e == startNode) {
-            e.costf = 0
+        if (cell.unitInside == startNode.unitInside) {
+            cell.costf = 0;
         } else {
-            e.costf = Infinity //Inicializa el costo de todos los nodos a el start en infinito
-            openList.push(e);
+            if ((!cell.unitInside || cell.unitInside.owner == unit.owner)) {
+                cell.costf = Infinity //Inicializa el costo de todos los nodos a el start en infinito
+                openList.push(cell);
+            }
         }
-
 
     })
 

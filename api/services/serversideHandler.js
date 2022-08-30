@@ -1,6 +1,5 @@
 const mapGrid = require("../../tools/mapa.json");
 const Cell = require("../objects/Cell");
-const { unitsInstances } = require("../objects/Unit");
 const Unit = require("../objects/Unit");
 const { validateSelectUnit, validateCreateUnit, validateMovement } = require("./validations");
 
@@ -29,7 +28,7 @@ exports.sendSelectUnitToClients = function (socket, data) {
 
 exports.sendMoveUnitToClients = function (sockets, data){
     let res = validateMovement(data.id, data.position);
-    res.unitList = unitsInstances;
+    res.unitList = Unit.unitsInstances;
     res.cellList = Cell.cellList;
     res.isValid ? console.log(`Unit id ${data.id} moved to ${JSON.stringify(data.position)}`) : console.log(res.message)
     sockets.emit("moveUnit", res)

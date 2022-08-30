@@ -1,11 +1,20 @@
 var express = require("express");
 const { get } = require("https");
-const { connect } = require("net");
 var app = express();
 var cors = require("cors");
 const grid = require("./objects/grid");
-const { sendSelectUnitToClients, sendMapToClient, sendCreateUnitToClients, sendMoveUnitToClients } = require("./services/serverSideHandler");
-const mapGrid = require("../tools/mapa.json")
+
+const { 
+    sendSelectUnitToClients, 
+    sendMapToClient, 
+    sendCreateUnitToClients, 
+    sendMoveUnitToClients 
+} = require("./services/serverSideHandler");
+
+const mapGrid = require("../tools/mapa.json");
+const Unit = require("./objects/Unit");
+const gameHandlerServer = require("./services/gameHandler");
+const { controller } = require("./controller");
 var server = require("http").createServer(app);
 const PORT = 8091;
 
@@ -32,6 +41,9 @@ server.listen(PORT, function () {
 
 //--------------------------------------
 
+controller.connect(server);
+
+/*
 
 var io = require("socket.io")(server, {
     cors: {
@@ -73,8 +85,10 @@ io.on("connection", function (socket) {
 
 });
 
-
+*/
 
 //////////////////////// TESTS ///////////////////////////////
 
 grid.makeGrid(mapGrid)
+
+// debugger
