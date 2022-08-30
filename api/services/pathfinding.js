@@ -1,20 +1,19 @@
-const Cell = require("../objects/Cell")
-const grid = require("../objects/grid")
+const gameHandler = require("./gameHandler");
 
-exports.calculateReach = function (unit) {
+exports.calculateReach = function (unit, grid) {
 
     let reacheableCells = []
-    let potentiallyReacheableGrid = Cell.cellList;
+    let potentiallyReacheableGrid = gameHandler.getCellList();
 
 
-    calculateCosts(grid.getCell(unit.position), potentiallyReacheableGrid, unit)
+    calculateCosts(gameHandler.getCell(unit.position), potentiallyReacheableGrid, unit)
 
     potentiallyReacheableGrid.forEach((node) => {
         let pathCost = node.costf
         // this.pathCost(this.position, node)
 
         node.isReachable = false;
-        if (pathCost <= unit.movement && node != grid.getCell(unit.position)) {
+        if (pathCost <= unit.movement && node != gameHandler.getCell(unit.position)) {
             node.isReachable = true;
             reacheableCells.push(node)
         }
@@ -130,21 +129,21 @@ function setNeighbors(cell) {
     let y = cell.position.y
     let $cell
 
-    if ($cell = grid.getCell({ x: x + 1, y: y + 0 }))
+    if ($cell = gameHandler.getCell({ x: x + 1, y: y + 0 }))
         neighbors.push($cell)
-    if ($cell = grid.getCell({ x: x - 1, y: y + 0 }))
+    if ($cell = gameHandler.getCell({ x: x - 1, y: y + 0 }))
         neighbors.push($cell)
-    if ($cell = grid.getCell({ x: x + 0, y: y + 1 }))
+    if ($cell = gameHandler.getCell({ x: x + 0, y: y + 1 }))
         neighbors.push($cell)
-    if ($cell = grid.getCell({ x: x + 0, y: y - 1 }))
+    if ($cell = gameHandler.getCell({ x: x + 0, y: y - 1 }))
         neighbors.push($cell)
-    if ($cell = grid.getCell({ x: x + 1, y: y + 1 }))
+    if ($cell = gameHandler.getCell({ x: x + 1, y: y + 1 }))
         neighbors.push($cell)
-    if ($cell = grid.getCell({ x: x + 1, y: y - 1 }))
+    if ($cell = gameHandler.getCell({ x: x + 1, y: y - 1 }))
         neighbors.push($cell)
-    if ($cell = grid.getCell({ x: x - 1, y: y + 1 }))
+    if ($cell = gameHandler.getCell({ x: x - 1, y: y + 1 }))
         neighbors.push($cell)
-    if ($cell = grid.getCell({ x: x - 1, y: y - 1 }))
+    if ($cell = gameHandler.getCell({ x: x - 1, y: y - 1 }))
         neighbors.push($cell)
 
     return neighbors

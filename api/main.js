@@ -4,13 +4,6 @@ var app = express();
 var cors = require("cors");
 const grid = require("./objects/grid");
 
-const { 
-    sendSelectUnitToClients, 
-    sendMapToClient, 
-    sendCreateUnitToClients, 
-    sendMoveUnitToClients 
-} = require("./services/serverSideHandler");
-
 const mapGrid = require("../tools/mapa.json");
 const Unit = require("./objects/Unit");
 const gameHandlerServer = require("./services/gameHandler");
@@ -43,52 +36,12 @@ server.listen(PORT, function () {
 
 controller.connect(server);
 
-/*
 
-var io = require("socket.io")(server, {
-    cors: {
-        origin: "*"
-    }
-})
-
-
-//---------------- HEAR MESSAGES FROM CLIENT -------------------
-
-io.on("connection", function (socket) {
-    var clientIp = socket.request.connection.remoteAddress
-
-    console.log("alguien se conectó con la IP" + clientIp + " y el id " + socket.id)
-
-    sendMapToClient(socket);
-
-    socket.on("createUnit", function (data) {
-        sendCreateUnitToClients(io.sockets, data);
-    });
-
-    // socket.on("setPlayer", function (data) {
-        
-    // })
-
-    socket.on("selectUnit", function (data) {
-        sendSelectUnitToClients(socket, data);
-    })
-
-
-    socket.on("moveUnit", function (data) {
-        sendMoveUnitToClients(io.sockets, data)
-    });
-
-    // socket.on("destroyUnit", function (data) {
-    //     console.log("Se destruye una unidad")
-    //     io.sockets.emit("destroyUnit", data)
-    // });
-
-});
-
-*/
 
 //////////////////////// TESTS ///////////////////////////////
 
 grid.makeGrid(mapGrid)
+const testUnit = gameHandlerServer.createUnit("soldier", "pepe")
+gameHandlerServer.moveUnit(testUnit.id, {x:19 ,y:8})
 
 // debugger

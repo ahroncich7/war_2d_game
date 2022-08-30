@@ -21,21 +21,31 @@ export var serverHandler = {
         })
 
         this.socket.on("resSelectUnit", (data) => {
-            gameHandler.selectUnit(data.id);
-            gameHandler.updateTiles(data.cellList)
-            console.log(data.message);
+            if (data.status == "Ok") {
+                gameHandler.selectUnit(data.id);
+                gameHandler.updateTiles(data.cellList)
+            }else{
+                console.log(data.message);
+            }
         })
 
         this.socket.on("resCreateUnit", (data) => {
-            gameHandler.updateUnits(data.unitList);
-            gameHandler.updateTiles(data.cellList);
-            console.log(data.message);
+            if (data.status == "Ok") {
+                gameHandler.updateUnits(data.unitList);
+                gameHandler.updateTiles(data.cellList);
+            }else {
+                console.log(data.message);
+            }
         })
 
         this.socket.on("resMoveUnit", (data) => {
-            gameHandler.updateUnits(data.unitList);
-            gameHandler.updateTiles(data.cellList);
-            console.log(data.message);
+            if (data.status == "Ok") {
+                gameHandler.updateUnits(data.unitList);
+                gameHandler.updateTiles(data.cellList);
+            }else{
+                console.log(data.message);
+            }
+            
         });
 
 

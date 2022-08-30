@@ -23,7 +23,7 @@ module.exports = class Unit {
     moveTo(position) {
         let cell = grid.getCell(position)
         try{grid.getCell(this.position).unitInside = undefined} 
-        catch{console.log("No unit Position")}
+        catch{console.log("No unit previous position")}
         cell.unitInside = this
         this.position = position;
 

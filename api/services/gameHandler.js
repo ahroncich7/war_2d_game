@@ -1,6 +1,4 @@
 const Cell = require("../objects/Cell");
-const grid = require("../objects/grid");
-const { getUnit } = require("../objects/Unit");
 const Unit = require("../objects/Unit");
 const { fight } = require("./combatSystem");
 const { calculateReach } = require("./pathfinding");
@@ -8,14 +6,9 @@ const { calculateReach } = require("./pathfinding");
 module.exports = gameHandlerServer = {
 
     moveUnit(id, position) {
-        let unit = getUnit(id);
-        calculateReach(unit);
+        let unit = this.getUnit(id);
         unit.moveTo(position);
         this.setTilesUnreachables();
-    },
-
-    calculateReach(unit){
-        calculateReach(unit);
     },
 
     setTilesUnreachables(){
@@ -24,10 +17,10 @@ module.exports = gameHandlerServer = {
         })
     },
 
-    createUnit(data){
-        let unit = new Unit(data.type, data.owner);
+    createUnit(type, owner){
+        let unit = new Unit(type, owner);
         unit.moveTo(ownerHomePosition = {x:17, y:10});
-
+        return unit
     },
 
     getUnit(unitId) {
@@ -43,7 +36,7 @@ module.exports = gameHandlerServer = {
     },
 
     getCell(position){
-        return grid.getCell(position);
+        return Cell.cellList(position);
     },
 
     launchCombat(attacker, defender){

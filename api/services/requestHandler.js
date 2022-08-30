@@ -1,10 +1,11 @@
 const mapGrid = require("../../tools/mapa.json");
 const gameHandlerServer = require("./gameHandler");
-const { validateSelectUnit, validateCreateUnit, validateMoveUnit, validateTargetCell, validateUnitInTarget } = require("./validations");
+const { calculateReach } = require("./pathfinding");
+const { validateSelectUnit, validateCreateUnit, validateTargetCell, validateUnitInTarget, validateMoveUnit } = require("./validations");
 
 module.exports = requestHandler = {
 
-    reqMap(data){
+    reqMap(data) {
         let responseData = {
             map: mapGrid,
             message: "Map 1 Seted Up"
@@ -14,48 +15,44 @@ module.exports = requestHandler = {
 
     reqSelectUnit(data) {
 
-        let responseData = {
-            message : ""
-        }
+        let responseData = {}
 
         let isValid = validateSelectUnit(data);
 
         if (isValid) {
 
             let unit = gameHandlerServer.getUnit(data.id)
-            try {
+            try {calculateReach(unit) }
+            catch { responseData.message = `Calculate Reach Failed` }
+            responseData.status = "Ok"
+            responseData.id = data.id;
 
-                gameHandlerServer.calculateReach(unit)
-
-            } catch {
-                responseData.message = `Calculate Reach Failed`;
-            }
         } else {
 
             gameHandlerServer.setTilesUnreachables();
+            responseData.status = "Error";
             responseData.message = `Selection not valid`;
 
         }
 
         responseData.unitList = gameHandlerServer.getUnitList();
         responseData.cellList = gameHandlerServer.getCellList();
-        responseData.id = data.id;
         return responseData;
     },
 
     reqCreateUnit(data) {
 
-        let responseData = {
-            message :""
-        }
+        let responseData = {}
 
         let isValid = validateCreateUnit(data);
 
         if (isValid) {
-            gameHandlerServer.createUnit(data);
+            gameHandlerServer.createUnit(data.type, data.owner);
             responseData.unitList = gameHandlerServer.getUnitList();
             responseData.cellList = gameHandlerServer.getCellList();
+            responseData.status = "Ok"
         } else {
+            responseData.status = "Error"
             responseData.message = `Failed to create`;
         }
 
@@ -64,21 +61,21 @@ module.exports = requestHandler = {
 
     reqMoveUnit(data) {
 
-        let responseData = {
-            message : "",
-            selectUnitInstead: false
-        }
+        let responseData = {}
 
         let isValid = validateTargetCell(data);
+        let unitInTarget = validateUnitInTarget(data);
+        let targetIsReachable = validateMoveUnit(data.id, data.position);
 
         if (isValid) {
-            let unitInTarget = validateUnitInTarget(data);
-
+            
             if (unitInTarget == "NO_UNIT") {
-                gameHandlerServer.moveUnit(data.id, data.position);
+
+                if (targetIsReachable) {
+                    gameHandlerServer.moveUnit(data.id, data.position);
+                }
                 responseData.unitList = gameHandlerServer.getUnitList();
                 responseData.cellList = gameHandlerServer.getCellList();
-                return responseData;
             }
 
             if (unitInTarget == "OWN_UNIT") {
@@ -93,7 +90,8 @@ module.exports = requestHandler = {
                 gameHandlerServer.getUnitList();
                 gameHandlerServer.getCellList();
             }
-            gameHandlerServer.moveUnit(data.id, data.position);
+
+            responseData.status = "Ok";
 
         } else {
             responseData.message = `Failed to move unit`

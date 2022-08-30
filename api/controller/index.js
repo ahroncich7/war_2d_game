@@ -1,5 +1,4 @@
 const requestHandler = require("../services/requestHandler")
-const { reqSelectUnit } = require("../services/requestHandler")
 
 
 exports.controller = {
@@ -35,7 +34,7 @@ exports.controller = {
             socket.on("reqMoveUnit", function (data) {
                 let response = requestHandler.reqMoveUnit(data);
                 if(response.selectUnitInstead){
-                    socket.emit("resSelectUnit")
+                    socket.emit("resSelectUnit", response)
                 }else{
                 io.sockets.emit(`resMoveUnit`, response)};
             });
