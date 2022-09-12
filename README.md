@@ -14,6 +14,8 @@ Juego multijugador por turnos para PC, donde cada jugador administra una serie d
 
 Implementa un sistema de pathfinding basado en el [algoritmo de Dijkstra](https://es.wikipedia.org/wiki/Algoritmo_de_Dijkstra) para calcular el alcance de las unidades.
 
+Los clientes (jugadores) se conectan al servidor y pasan los cambios en el tablero. El servidor envía actualizaciones a cada cliente a través de web sockets implementando [sokcet.io](https://socket.io/)
+
 
 
 El mapa se crea dinámicamente desde un archivo JSON exportado desde la aplicación [Tiled](https://www.mapeditor.org/).
