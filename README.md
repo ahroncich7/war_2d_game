@@ -1,31 +1,28 @@
 # WAR 2d GAME
 
+VISIT => https://war-2d-game-pjtg75810-ahroncich7.vercel.app/
+ 
+
 <br>
 
 
-##Proyecto en construcción
+## Proyecto en construcción
 
+Para encargo freelance.
+<br>
 Juego multijugador por turnos para PC, donde cada jugador administra una serie de unidades que deberá guiar a la victoria.
+
+Implementa un sistema de pathfinding basado en el [algoritmo de Dijkstra](https://es.wikipedia.org/wiki/Algoritmo_de_Dijkstra) para calcular el alcance de las unidades.
+
+
+
+El mapa se crea dinámicamente desde un archivo JSON exportado desde la aplicación [Tiled](https://www.mapeditor.org/).
+
 
 ![img pendiente]
 
 <br>
 
-## Propósito del Proyecto:
-
-[Img pendiente]
-<br>
-La principal motivación al embarcarme en este desafío fué poner en práctica todas las tecnología que fui y seguiré aprendiendo
-a lo largo de mi proceso de formación.
-
-Cada paso que di me obligó a repensar el proyecto con vista a crear un codigo limpio y mantenible, funcional y pensado desde
-la perspectiva que personalmente entiendo como la de un "Porfesional"
-
-<br>
-No obstante, independientemente de cuando se estén leyendo estas lineas, es indiscutible que aún habrá muchisimas cosas por mejorar.
-De hecho, eso es parte fundamental de esta hermosa profesion: aprender permantentemente, para mejorar permanentemente el software 
-hasta el momento en que el mismo sea reemplazado quede en desuso.
-<br>
 
 ## Tecnologías Involucradas en este Proyecto:
 
@@ -36,6 +33,9 @@ hasta el momento en que el mismo sea reemplazado quede en desuso.
 - ### Socket.io
 - ### Git
 - ### Github
+- ### Tiled
+
+<br>
 
 
 ## Cómo ejecutar
@@ -47,5 +47,4 @@ hasta el momento en que el mismo sea reemplazado quede en desuso.
 ## Capturas de pantalla
 
 > //TODO
-VISIT => https://war-2d-game-ahroncich7.vercel.app/
- 
+
