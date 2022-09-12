@@ -52,14 +52,6 @@ exports.validateTargetCell = function (data) {
         return false
     }
 
-    calculateReach(unit);
-
-    // cell = gameHandlerServer.getCell(data.position);
-    if (!cell.isReachable) {
-        console.log(`ValidateMoveUnit: Not reachable position`)
-        return false
-    }
-
     return true
 }
 
@@ -80,10 +72,10 @@ exports.validateUnitInTarget = function (data) {
 
 exports.validateMoveUnit = function (unitId, position) {
     const unit = gameHandlerServer.getUnit(unitId);
-
+    const cell = gameHandlerServer.getCell(position)
     calculateReach(unit);
 
-    if (position.isReachable) {
+    if (cell.isReachable) {
         return true
     } else {
         console.log("ValidateMoveUnit: Target unreachable")

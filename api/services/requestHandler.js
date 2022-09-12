@@ -74,8 +74,6 @@ module.exports = requestHandler = {
                 if (targetIsReachable) {
                     gameHandlerServer.moveUnit(data.id, data.position);
                 }
-                responseData.unitList = gameHandlerServer.getUnitList();
-                responseData.cellList = gameHandlerServer.getCellList();
             }
 
             if (unitInTarget == "OWN_UNIT") {
@@ -87,12 +85,12 @@ module.exports = requestHandler = {
                 let attacker = gameHandlerServer.getUnit(data.id);
                 let defender = gameHandlerServer.getCell(data.position).unitInside;
                 gameHandlerServer.launchCombat(attacker, defender)
-                gameHandlerServer.getUnitList();
-                gameHandlerServer.getCellList();
+                gameHandlerServer.setTilesUnreachables();
             }
 
             responseData.status = "Ok";
-
+            responseData.cellList = gameHandlerServer.getCellList();
+            responseData.unitList = gameHandlerServer.getUnitList();
         } else {
             responseData.message = `Failed to move unit`
         }

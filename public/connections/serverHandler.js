@@ -42,6 +42,7 @@ export var serverHandler = {
             if (data.status == "Ok") {
                 gameHandler.updateUnits(data.unitList);
                 gameHandler.updateTiles(data.cellList);
+                gameHandler.unselectAll()
             }else{
                 console.log(data.message);
             }

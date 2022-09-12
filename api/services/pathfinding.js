@@ -1,6 +1,6 @@
 const gameHandler = require("./gameHandler");
 
-exports.calculateReach = function (unit, grid) {
+exports.calculateReach = function (unit) {
 
     let reacheableCells = []
     let potentiallyReacheableGrid = gameHandler.getCellList();
